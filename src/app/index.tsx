@@ -1,9 +1,11 @@
-import { View} from 'react-native'
+import { SafeAreaView } from 'react-native'
+import { Calendar } from 'react-native-calendars'
 
 const Index = (): JSX.Element => {
   return (
-    <View>
-    </View>
+    <SafeAreaView>
+      <Calendar />
+    </SafeAreaView>
   )
 }
 
