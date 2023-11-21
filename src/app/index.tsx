@@ -1,10 +1,9 @@
-import { View, Text } from 'react-native'
+import { View} from 'react-native'
 
 const Index = (): JSX.Element => {
   return (
-      <View>
-          <Text>Hello</Text>
-      </View>
+    <View>
+    </View>
   )
 }
 
