@@ -1,45 +1,31 @@
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
-import { router, useNavigation } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-
-const checkShift = (): void => {
-  router.push('shift/check')
-}
-const submitShift = (): void => {
-  router.push('shift/submit')
-}
-const editShift = (): void => {
-  router.push('shift/edit')
-}
-const other = (): void => {
-  router.push('shift/other')
-}
 
 const Home = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
         <View style={styles.checkShift}>
-          <TouchableOpacity onPress={checkShift}>
+          <TouchableOpacity>
             <Text>シフト確認</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.submitShift}>
-          <TouchableOpacity onPress={submitShift}>
+          <TouchableOpacity>
             <Text>シフト提出</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.editShift}>
-          <TouchableOpacity onPress={editShift}>
+          <TouchableOpacity>
             <Text>シフト編集</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.other}>
-          <TouchableOpacity onPress={other}>
+          <TouchableOpacity>
             <Text>その他</Text>
           </TouchableOpacity>
         </View>
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
       </View>
     </SafeAreaView>
   )

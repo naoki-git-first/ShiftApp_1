@@ -6,13 +6,13 @@ const checkShift = (): void => {
   router.push('shift/check')
 }
 const submitShift = (): void => {
-  router.push('shift/submit')
+  router.push('shift/check')
 }
 const editShift = (): void => {
-  router.push('shift/edit')
+  router.push('shift/check')
 }
 const other = (): void => {
-  router.push('shift/other')
+  router.push('shift/check')
 }
 
 const Home = (): JSX.Element => {
