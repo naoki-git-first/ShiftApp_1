@@ -49,7 +49,7 @@ const LogIn = (): JSX.Element => {
           placeholder='Passeord'
           textContentType='password'
         />
-        {/* <Button label='Submit' onPress={() => { handlePress(email, password) }} /> */}
+        <Button label='Submit' onPress={() => { handlePress(email, password) }} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not register</Text>
           <Link href='/auth/sign_up' asChild replace>
