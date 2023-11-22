@@ -32,17 +32,17 @@ const Home = (): JSX.Element => {
         </View>
         <View style={styles.checkShift}>
           <TouchableOpacity onPress={checkShift}>
-            <Text>シフト確認   ＞</Text>
+            <Text>シフト確認</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.submitShift}>
           <TouchableOpacity onPress={submitShift}>
-            <Text>シフト提出   ＞</Text>
+            <Text>シフト提出</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.editShift}>
           <TouchableOpacity onPress={editShift}>
-            <Text>シフト編集   ＞</Text>
+            <Text>シフト編集</Text>
           </TouchableOpacity>
         </View>
         <StatusBar style="auto" />
@@ -58,14 +58,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#ffffff'
   },
   profile: {
     flexDirection: 'row',
     backgroundColor: '#ffffff',
     // justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
     alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 8
@@ -80,30 +77,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 12
   },
   profileText: {
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     paddingVertical: 12,
     paddingHorizontal: 8
   },
   checkShift: {
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
     alignItems: 'center',
     paddingVertical: 24,
     paddingHorizontal: 8
   },
   submitShift: {
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
     alignItems: 'center',
     paddingVertical: 24,
     paddingHorizontal: 8
   },
   editShift: {
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
     alignItems: 'center',
     paddingVertical: 24,
     paddingHorizontal: 8

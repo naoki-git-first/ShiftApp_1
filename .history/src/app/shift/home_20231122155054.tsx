@@ -27,22 +27,22 @@ const Home = (): JSX.Element => {
           </TouchableOpacity>
           <View style={styles.profileText}>
             <Text>桑門秀典 さん</Text>
-            <Text>ID: 0123</Text>
+            <Text>ID: 0123 アルバイト</Text>
           </View>
         </View>
         <View style={styles.checkShift}>
           <TouchableOpacity onPress={checkShift}>
-            <Text>シフト確認   ＞</Text>
+            <Text>シフト確認</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.submitShift}>
           <TouchableOpacity onPress={submitShift}>
-            <Text>シフト提出   ＞</Text>
+            <Text>シフト提出</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.editShift}>
           <TouchableOpacity onPress={editShift}>
-            <Text>シフト編集   ＞</Text>
+            <Text>シフト編集</Text>
           </TouchableOpacity>
         </View>
         <StatusBar style="auto" />
@@ -57,15 +57,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffffff'
   },
   container: {
-    flex: 1,
-    backgroundColor: '#ffffff'
+    flex: 1
   },
   profile: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffff00',
+    fontSize: 34,
     // justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
     alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 8
@@ -73,38 +71,36 @@ const styles = StyleSheet.create({
   icon: {
     width: 64,
     height: 64,
-    backgroundColor: '#dddddd',
+    fontSize: 48,
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 24,
     marginHorizontal: 12
   },
   profileText: {
+    fontSize: 24,
+    backgroundColor: '#ff0000',
     justifyContent: 'center',
+    // alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 8
   },
   checkShift: {
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
-    alignItems: 'center',
+    backgroundColor: '#ff0000',
+    fontSize: 48,
     paddingVertical: 24,
     paddingHorizontal: 8
   },
   submitShift: {
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
-    alignItems: 'center',
+    backgroundColor: '#00ff00',
+    fontSize: 34,
     paddingVertical: 24,
     paddingHorizontal: 8
   },
   editShift: {
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
-    alignItems: 'center',
+    backgroundColor: '#0000ff',
+    fontSize: 34,
     paddingVertical: 24,
     paddingHorizontal: 8
   }

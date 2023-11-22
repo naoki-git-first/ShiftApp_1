@@ -37,12 +37,12 @@ const Home = (): JSX.Element => {
         </View>
         <View style={styles.submitShift}>
           <TouchableOpacity onPress={submitShift}>
-            <Text>シフト提出   ＞</Text>
+            <Text>シフト提出</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.editShift}>
           <TouchableOpacity onPress={editShift}>
-            <Text>シフト編集   ＞</Text>
+            <Text>シフト編集</Text>
           </TouchableOpacity>
         </View>
         <StatusBar style="auto" />
