@@ -34,10 +34,9 @@ const Home = (): JSX.Element => {
             <Text>シフト編集</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.profile}>
+        <View style={styles.other}>
           <TouchableOpacity onPress={profile}>
-            <Text>桑門秀典 さん</Text>
-            <Text>ID: 0123 アルバイト</Text>
+            <Text>その他</Text>
           </TouchableOpacity>
         </View>
         <StatusBar style="auto" />
@@ -53,13 +52,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1
-  },
-  profile: {
-    flex: 1,
-    backgroundColor: '#ffff00',
-    fontSize: 34,
-    paddingVertical: 24,
-    paddingHorizontal: 8
   },
   checkShift: {
     flex: 1,
@@ -78,6 +70,13 @@ const styles = StyleSheet.create({
   editShift: {
     flex: 1,
     backgroundColor: '#0000ff',
+    fontSize: 34,
+    paddingVertical: 24,
+    paddingHorizontal: 8
+  },
+  other: {
+    flex: 1,
+    backgroundColor: '#ffff00',
     fontSize: 34,
     paddingVertical: 24,
     paddingHorizontal: 8

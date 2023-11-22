@@ -54,13 +54,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  profile: {
-    flex: 1,
-    backgroundColor: '#ffff00',
-    fontSize: 34,
-    paddingVertical: 24,
-    paddingHorizontal: 8
-  },
   checkShift: {
     flex: 1,
     backgroundColor: '#ff0000',
@@ -78,6 +71,13 @@ const styles = StyleSheet.create({
   editShift: {
     flex: 1,
     backgroundColor: '#0000ff',
+    fontSize: 34,
+    paddingVertical: 24,
+    paddingHorizontal: 8
+  },
+  profile: {
+    flex: 1,
+    backgroundColor: '#ffff00',
     fontSize: 34,
     paddingVertical: 24,
     paddingHorizontal: 8
