@@ -13,7 +13,7 @@ const Index = (): JSX.Element => {
   //   })
   // }, [])
 
-  return <Redirect href='shift/home' />
+  return <Redirect href='user/profile' />
 }
 
 export default Index

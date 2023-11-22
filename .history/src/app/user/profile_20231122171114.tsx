@@ -1,10 +1,4 @@
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
-import { router } from 'expo-router'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-
-const profileEdit = (): void => {
-  router.push('user/profile_edit')
-}
 
 const Profile = (): JSX.Element => {
   return (
@@ -32,9 +26,6 @@ const Profile = (): JSX.Element => {
       <View>
         <Text style={styles.passwordText}>パスワード：</Text>
       </View>
-      <TouchableOpacity onPress={profileEdit}>
-        <Text>編集</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -42,14 +33,12 @@ const Profile = (): JSX.Element => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ff0000'
   },
   shopNameText: {
-    fontSize: 32,
+    fontSize: 36,
     backgroundColor: '#ffffff',
-    paddingTop: 12,
-    paddingHorizontal: 12,
-    textAlign: 'center'
+    alignItems: 'center',
   },
   topBrock: {
     flexDirection: 'row',

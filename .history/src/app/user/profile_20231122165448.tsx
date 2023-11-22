@@ -1,10 +1,4 @@
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
-import { router } from 'expo-router'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-
-const profileEdit = (): void => {
-  router.push('user/profile_edit')
-}
 
 const Profile = (): JSX.Element => {
   return (
@@ -20,7 +14,7 @@ const Profile = (): JSX.Element => {
           <Text style={styles.nameText}>名前： </Text>
         </View>
       </View>
-      <View>
+      <View style={styles.role}>
         <Text style={styles.roleText}>役職：</Text>
       </View>
       <View>
@@ -32,9 +26,6 @@ const Profile = (): JSX.Element => {
       <View>
         <Text style={styles.passwordText}>パスワード：</Text>
       </View>
-      <TouchableOpacity onPress={profileEdit}>
-        <Text>編集</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -42,14 +33,8 @@ const Profile = (): JSX.Element => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff'
-  },
-  shopNameText: {
-    fontSize: 32,
-    backgroundColor: '#ffffff',
-    paddingTop: 12,
-    paddingHorizontal: 12,
-    textAlign: 'center'
+    backgroundColor: '#ff0000',
+    paddingHorizontal: 12
   },
   topBrock: {
     flexDirection: 'row',
@@ -66,37 +51,27 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     marginHorizontal: 12
   },
+  shopNameText: {
+    fontSize: 36
+  },
   nameText: {
     fontSize: 20
   },
   role: {
-    backgroundColor: '#ffffff',
-    paddingVertical: 12,
-    paddingHorizontal: 12
+  backgroundColor: '#ffff00',
+    pa
   },
   roleText: {
-    fontSize: 20,
-    backgroundColor: '#ffffff',
-    paddingVertical: 12,
-    paddingHorizontal: 12
+    fontSize: 24
   },
   branchText: {
-    fontSize: 20,
-    backgroundColor: '#ffffff',
-    paddingVertical: 12,
-    paddingHorizontal: 12
+    fontSize: 24
   },
   mailText: {
-    fontSize: 20,
-    backgroundColor: '#ffffff',
-    paddingVertical: 12,
-    paddingHorizontal: 12
+    fontSize: 24
   },
   passwordText: {
-    fontSize: 20,
-    backgroundColor: '#ffffff',
-    paddingVertical: 12,
-    paddingHorizontal: 12
+    fontSize: 24
   }
 })
 

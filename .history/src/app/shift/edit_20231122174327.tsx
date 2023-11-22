@@ -6,7 +6,7 @@ const handlePress = (): void => {
 }
 const EditShift = (): JSX.Element => {
   return (
-    <SafeAreaView style={styles.SafeArea}>
+    <SafeAreaView>
       <View>
         <Text>編集</Text>
       </View>
