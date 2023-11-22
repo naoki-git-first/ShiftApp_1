@@ -21,14 +21,9 @@ const Home = (): JSX.Element => {
       <View style={styles.container}>
         <View style={styles.profile}>
           <TouchableOpacity onPress={profile}>
-            <View style={styles.icon}>
-              <Text >画</Text>
-            </View>
-          </TouchableOpacity>
-          <View style={styles.profileText}>
             <Text>桑門秀典 さん</Text>
             <Text>ID: 0123 アルバイト</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.checkShift}>
           <TouchableOpacity onPress={checkShift}>
@@ -60,45 +55,28 @@ const styles = StyleSheet.create({
     flex: 1
   },
   profile: {
-    flexDirection: 'row',
+    flex: 1,
     backgroundColor: '#ffff00',
     fontSize: 34,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 8
-  },
-  icon: {
-    width: 84,
-    height: 84,
-    fontSize: 48,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 24,
-    marginHorizontal: 12
-  },
-  profileText: {
-    fontSize: 24,
-    backgroundColor: '#ff0000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 24,
     paddingHorizontal: 8
   },
   checkShift: {
+    flex: 1,
     backgroundColor: '#ff0000',
-    fontSize: 48,
+    fontSize: 34,
     paddingVertical: 24,
     paddingHorizontal: 8
   },
   submitShift: {
+    flex: 1,
     backgroundColor: '#00ff00',
     fontSize: 34,
     paddingVertical: 24,
     paddingHorizontal: 8
   },
   editShift: {
+    flex: 1,
     backgroundColor: '#0000ff',
     fontSize: 34,
     paddingVertical: 24,

@@ -60,12 +60,13 @@ const styles = StyleSheet.create({
     flex: 1
   },
   profile: {
+    flex: 0.3,
     flexDirection: 'row',
     backgroundColor: '#ffff00',
     fontSize: 34,
     // justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: 24,
     paddingHorizontal: 8
   },
   icon: {

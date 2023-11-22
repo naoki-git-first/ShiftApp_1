@@ -60,31 +60,28 @@ const styles = StyleSheet.create({
     flex: 1
   },
   profile: {
+    flex: 0.3,
     flexDirection: 'row',
     backgroundColor: '#ffff00',
     fontSize: 34,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 8,
+    justifyContent: 'center',
+    paddingVertical: 24,
     paddingHorizontal: 8
   },
   icon: {
-    width: 84,
-    height: 84,
+    // flex: 0.2,
     fontSize: 48,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 24,
-    marginHorizontal: 12
+    marginRight: 24
   },
   profileText: {
+    // flex: 0.8,
     fontSize: 24,
     backgroundColor: '#ff0000',
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 8
+    alignItems: 'center'
   },
   checkShift: {
     backgroundColor: '#ff0000',

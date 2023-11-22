@@ -60,45 +60,43 @@ const styles = StyleSheet.create({
     flex: 1
   },
   profile: {
+    flex: 1,
     flexDirection: 'row',
     backgroundColor: '#ffff00',
     fontSize: 34,
-    // justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: 24,
     paddingHorizontal: 8
   },
   icon: {
-    width: 84,
-    height: 84,
+    flex: 0.2,
     fontSize: 48,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 24,
-    marginHorizontal: 12
+    backgroundColor: '#fff'
   },
   profileText: {
+    flex: 0.8,
     fontSize: 24,
     backgroundColor: '#ff0000',
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 8
+    alignItems: 'center'
   },
   checkShift: {
+    flex: 1,
     backgroundColor: '#ff0000',
     fontSize: 48,
     paddingVertical: 24,
     paddingHorizontal: 8
   },
   submitShift: {
+    flex: 1,
     backgroundColor: '#00ff00',
     fontSize: 34,
     paddingVertical: 24,
     paddingHorizontal: 8
   },
   editShift: {
+    flex: 1,
     backgroundColor: '#0000ff',
     fontSize: 34,
     paddingVertical: 24,
