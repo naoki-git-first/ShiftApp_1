@@ -26,7 +26,7 @@ const Profile = (): JSX.Element => {
         <Text style={styles.baseText}>メールアドレス：</Text>
         <TextInput style={styles.input}/>
       </View>
-      <View style={styles.rowContainer}>
+      <View  style={styles.rowContainer}>
         <Text style={styles.baseText}>パスワード：</Text>
         <TextInput style={styles.input}/>
       </View>

@@ -12,22 +12,22 @@ const Profile = (): JSX.Element => {
           <Text>画</Text>
         </View>
         <View style={styles.rowContainer}>
-          <Text style={styles.baseText}>名前： </Text>
+          <Text style={styles.nameText}>名前： </Text>
           <TextInput style={styles.input}/>
         </View>
       </View>
       <View>
-        <Text style={styles.baseText}>役職：</Text>
+        <Text style={styles.roleText}>役職：</Text>
       </View>
       <View>
-        <Text style={styles.baseText}>店舗：</Text>
+        <Text style={styles.branchText}>店舗：</Text>
       </View>
       <View style={styles.rowContainer}>
-        <Text style={styles.baseText}>メールアドレス：</Text>
+        <Text style={styles.mailText}>メールアドレス：</Text>
         <TextInput style={styles.input}/>
       </View>
-      <View style={styles.rowContainer}>
-        <Text style={styles.baseText}>パスワード：</Text>
+      <View  style={styles.rowContainer}>
+        <Text style={styles.passwordText}>パスワード：</Text>
         <TextInput style={styles.input}/>
       </View>
     </SafeAreaView>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 6
   },
-  baseText: {
+  roleText: {
     fontSize: 20,
     backgroundColor: '#ffffff',
     paddingVertical: 12,

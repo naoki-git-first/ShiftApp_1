@@ -12,23 +12,21 @@ const Profile = (): JSX.Element => {
           <Text>画</Text>
         </View>
         <View style={styles.rowContainer}>
-          <Text style={styles.baseText}>名前： </Text>
+          <Text style={styles.nameText}>名前： </Text>
           <TextInput style={styles.input}/>
         </View>
       </View>
       <View>
-        <Text style={styles.baseText}>役職：</Text>
+        <Text style={styles.roleText}>役職：</Text>
       </View>
       <View>
-        <Text style={styles.baseText}>店舗：</Text>
+        <Text style={styles.branchText}>店舗：</Text>
       </View>
-      <View style={styles.rowContainer}>
-        <Text style={styles.baseText}>メールアドレス：</Text>
-        <TextInput style={styles.input}/>
+      <View>
+        <Text style={styles.mailText}>メールアドレス：</Text>
       </View>
-      <View style={styles.rowContainer}>
-        <Text style={styles.baseText}>パスワード：</Text>
-        <TextInput style={styles.input}/>
+      <View>
+        <Text style={styles.passwordText}>パスワード：</Text>
       </View>
     </SafeAreaView>
   )
@@ -37,7 +35,7 @@ const Profile = (): JSX.Element => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff'
   },
   shopNameText: {
     fontSize: 32,
@@ -61,14 +59,40 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     marginHorizontal: 12
   },
+  nameText: {
+    fontSize: 20
+  },
   input: {
-    width: 200,
+    flex: 1,
     borderWidth: 2,
     borderColor: '#0000ff',
     borderRadius: 5,
     padding: 6
   },
-  baseText: {
+  role: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  roleText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  branchText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  mailText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  passwordText: {
     fontSize: 20,
     backgroundColor: '#ffffff',
     paddingVertical: 12,

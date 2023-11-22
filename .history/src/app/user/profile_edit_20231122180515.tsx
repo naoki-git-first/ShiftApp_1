@@ -1,5 +1,4 @@
 import { View, Text, SafeAreaView, StyleSheet, Picker } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
 
 const Profile = (): JSX.Element => {
   return (
@@ -7,28 +6,25 @@ const Profile = (): JSX.Element => {
       <View>
         <Text style={styles.shopNameText}>店名</Text>
       </View>
-      <View style={styles.rowContainer}>
+      <View style={styles.topBrock}>
         <View style={styles.icon}>
-          <Text>画</Text>
+          <Text >画</Text>
         </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.baseText}>名前： </Text>
-          <TextInput style={styles.input}/>
+        <View>
+          <Text style={styles.nameText}>名前： </Text>
         </View>
       </View>
       <View>
-        <Text style={styles.baseText}>役職：</Text>
+        <Text style={styles.roleText}>役職：</Text>
       </View>
       <View>
-        <Text style={styles.baseText}>店舗：</Text>
+        <Text style={styles.branchText}>店舗：</Text>
       </View>
-      <View style={styles.rowContainer}>
-        <Text style={styles.baseText}>メールアドレス：</Text>
-        <TextInput style={styles.input}/>
+      <View>
+        <Text style={styles.mailText}>メールアドレス：</Text>
       </View>
-      <View style={styles.rowContainer}>
-        <Text style={styles.baseText}>パスワード：</Text>
-        <TextInput style={styles.input}/>
+      <View>
+        <Text style={styles.passwordText}>パスワード：</Text>
       </View>
     </SafeAreaView>
   )
@@ -37,7 +33,7 @@ const Profile = (): JSX.Element => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff'
   },
   shopNameText: {
     fontSize: 32,
@@ -46,7 +42,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     textAlign: 'center'
   },
-  rowContainer: {
+  topBrock: {
     flexDirection: 'row',
     backgroundColor: '#ffffff',
     alignItems: 'center'
@@ -61,14 +57,33 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     marginHorizontal: 12
   },
-  input: {
-    width: 200,
-    borderWidth: 2,
-    borderColor: '#0000ff',
-    borderRadius: 5,
-    padding: 6
+  nameText: {
+    fontSize: 20
   },
-  baseText: {
+  role: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  roleText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  branchText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  mailText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  passwordText: {
     fontSize: 20,
     backgroundColor: '#ffffff',
     paddingVertical: 12,
