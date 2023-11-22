@@ -9,13 +9,10 @@ const SubmitForm = (): JSX.Element => {
           <TextInput style={styles.inputTime}/>
           <Text style={styles.listInnerText}>:</Text>
           <TextInput style={styles.inputTime}/>
-          <Text style={styles.listInnerText}>~</Text>
           <TextInput style={styles.inputTime}/>
           <Text style={styles.listInnerText}>:</Text>
           <TextInput style={styles.inputTime}/>
-          <View>
-            <Text>終日</Text>
-          </View>
+          <Text style={styles.listInnerText}>＞</Text>
         </View>
         <View style={styles.rowContainer}>
           <TouchableOpacity>
