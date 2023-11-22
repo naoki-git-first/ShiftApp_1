@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-na
 import { router, useNavigation } from 'expo-router'
 
 const handlePress = (): void => {
-  router.push('shift/submit_form')
+  router.push('shift/home')
 }
 const SubmitShift = (): JSX.Element => {
   return (
@@ -12,7 +12,7 @@ const SubmitShift = (): JSX.Element => {
       <Text style={styles.subTitle}>募集中のシフト</Text>
       </View>
       <View>
-        <TouchableOpacity style={styles.acceptingShiftList} onPress={handlePress}>
+        <TouchableOpacity style={styles.acceptingShiftList}>
           <Text style={styles.acceptingShiftListText}>1/1 ~ 1/15 未提出 ＞</Text>
         </TouchableOpacity>
       </View>
@@ -33,17 +33,17 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   subTitle: {
-    fontSize: 18,
-    paddingHorizontal: 8,
-    marginBottom: 12
+    fontSize: 18
   },
   acceptingShiftList: {
+    backgroundColor: '#ff0000',
     borderWidth: 1,
     borderColor: '#dddddd',
     paddingVertical: 18,
     paddingHorizontal: 10
   },
   acceptingShiftListText: {
+    backgroundColor: '#ff00ff',
     fontSize: 18,
     textAlign: 'center'
   }
