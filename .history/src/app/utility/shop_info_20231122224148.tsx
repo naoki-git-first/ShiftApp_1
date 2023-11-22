@@ -1,39 +1,21 @@
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
 import { router } from 'expo-router'
 
-const profileEdit = (): void => {
-  router.push('user/profile_edit')
-}
-
-const Profile = (): JSX.Element => {
+const ShopInfo = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View>
-        <Text style={styles.shopNameText}>店名</Text>
-      </View>
-      <View style={styles.topBrock}>
-        <View style={styles.icon}>
-          <Text >画</Text>
-        </View>
-        <View>
-          <Text style={styles.text}>名前： </Text>
-        </View>
+        <Text style={styles.text}>店舗名：</Text>
       </View>
       <View>
-        <Text style={styles.text}>役職：</Text>
+        <Text style={styles.text}>店長：</Text>
       </View>
       <View>
-        <Text style={styles.text}>店舗：</Text>
+        <Text style={styles.text}>住所：</Text>
       </View>
       <View>
-        <Text style={styles.text}>メールアドレス：</Text>
+        <Text style={styles.text}>定休日：</Text>
       </View>
-      <View>
-        <Text style={styles.text}>パスワード：</Text>
-      </View>
-      <TouchableOpacity onPress={profileEdit}>
-        <Text>編集</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -73,4 +55,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Profile
+export default ShopInfo

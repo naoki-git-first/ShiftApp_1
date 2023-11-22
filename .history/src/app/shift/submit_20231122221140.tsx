@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { router, useNavigation } from 'expo-router'
 
 const handlePress = (): void => {
@@ -8,8 +8,8 @@ const SubmitShift = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.SafeArea}>
       <View>
-        <Text style={styles.title}>店舗名</Text>
-        <Text style={styles.subTitle}>募集中のシフト</Text>
+      <Text style={styles.title}>店舗名</Text>
+      <Text style={styles.subTitle}>募集中のシフト</Text>
       </View>
       <View>
         <TouchableOpacity style={styles.acceptingShiftList} onPress={handlePress}>

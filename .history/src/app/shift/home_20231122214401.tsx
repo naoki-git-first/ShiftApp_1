@@ -11,15 +11,12 @@ const checkShift = (): void => {
 const submitShift = (): void => {
   router.push('shift/submit')
 }
-const editShift = (): void => {
-  router.push('shift/edit')
-}
 const memberList = (): void => {
   router.push('utility/member_list')
 }
-const shopList = (): void => {
-  router.push('utility/shop_list')
-}
+// const  = (): void => {
+//   router.push('')
+// }
 // const  = (): void => {
 //   router.push('')
 // }
@@ -55,16 +52,6 @@ const Home = (): JSX.Element => {
         <View style={styles.editShift}>
           <TouchableOpacity onPress={editShift}>
             <Text>シフト編集   ＞</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.editShift}>
-          <TouchableOpacity onPress={memberList}>
-            <Text>メンバー管理   ＞</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.editShift}>
-          <TouchableOpacity onPress={shopList}>
-            <Text>店舗管理   ＞</Text>
           </TouchableOpacity>
         </View>
         <StatusBar style="auto" />

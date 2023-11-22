@@ -1,9 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
-import { router } from 'expo-router'
-
-const profileEdit = (): void => {
-  router.push('user/profile_edit')
-}
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
 
 const Profile = (): JSX.Element => {
   return (
@@ -16,24 +11,21 @@ const Profile = (): JSX.Element => {
           <Text >画</Text>
         </View>
         <View>
-          <Text style={styles.text}>名前： </Text>
+          <Text style={styles.nameText}>名前： </Text>
         </View>
       </View>
       <View>
-        <Text style={styles.text}>役職：</Text>
+        <Text style={styles.roleText}>役職：</Text>
       </View>
       <View>
-        <Text style={styles.text}>店舗：</Text>
+        <Text style={styles.branchText}>店舗：</Text>
       </View>
       <View>
-        <Text style={styles.text}>メールアドレス：</Text>
+        <Text style={styles.mailText}>メールアドレス：</Text>
       </View>
       <View>
-        <Text style={styles.text}>パスワード：</Text>
+        <Text style={styles.passwordText}>パスワード：</Text>
       </View>
-      <TouchableOpacity onPress={profileEdit}>
-        <Text>編集</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -65,7 +57,33 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     marginHorizontal: 12
   },
-  text: {
+  nameText: {
+    fontSize: 20
+  },
+  role: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  roleText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  branchText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  mailText: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  passwordText: {
     fontSize: 20,
     backgroundColor: '#ffffff',
     paddingVertical: 12,
