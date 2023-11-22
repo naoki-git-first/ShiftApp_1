@@ -1,5 +1,4 @@
 import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
-import { router } from 'expo-router'
 
 const profile = (): void => {
   router.push('user/profile')
@@ -23,8 +22,7 @@ const MemberList = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
-    backgroundColor: '#ffffff'
+    flex: 1
   },
   memberList: {
     flexDirection: 'row',

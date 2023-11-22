@@ -24,7 +24,7 @@ const MemberList = (): JSX.Element => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff'
+    backgroundColor:'#ffffff'
   },
   memberList: {
     flexDirection: 'row',
