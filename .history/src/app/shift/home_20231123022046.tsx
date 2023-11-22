@@ -12,7 +12,7 @@ const submitShift = (): void => {
   router.push('shift/submit')
 }
 const editShift = (): void => {
-  router.push('utility/edit_shop_list')
+  router.push('shift/edit_list')
 }
 const memberList = (): void => {
   router.push('utility/member_list')
