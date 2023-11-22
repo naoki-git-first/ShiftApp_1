@@ -6,13 +6,11 @@ const Profile = (): JSX.Element => {
       <View>
         <Text style={styles.shopNameText}>店名</Text>
       </View>
-      <View style={styles.topBrock}>
-        <View style={styles.icon}>
-          <Text >画</Text>
-        </View>
-        <View>
-          <Text style={styles.nameText}>名前： </Text>
-        </View>
+      <View style={styles.icon}>
+         <Text >画</Text>
+      </View>
+      <View>
+        <Text style={styles.nameText}>名前：</Text>
       </View>
       <View>
         <Text style={styles.roleText}>役職：</Text>
@@ -35,11 +33,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ff0000'
   },
-  topBrock: {
-    flexDirection: 'row',
-    backgroundColor: '#ffffff',
-    alignItems: 'center'
-  },
   icon: {
     width: 64,
     height: 64,
@@ -54,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 36
   },
   nameText: {
-    fontSize: 20
+    fontSize: 24
   },
   roleText: {
     fontSize: 24

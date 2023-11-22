@@ -11,7 +11,7 @@ const Profile = (): JSX.Element => {
           <Text >画</Text>
         </View>
         <View>
-          <Text style={styles.nameText}>名前： </Text>
+          <Text style={styles.nameText}>名前：</Text>
         </View>
       </View>
       <View>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 36
   },
   nameText: {
-    fontSize: 20
+    fontSize: 24
   },
   roleText: {
     fontSize: 24

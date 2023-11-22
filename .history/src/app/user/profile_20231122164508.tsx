@@ -11,7 +11,7 @@ const Profile = (): JSX.Element => {
           <Text >画</Text>
         </View>
         <View>
-          <Text style={styles.nameText}>名前： </Text>
+          <Text style={styles.nameText}>名前：</Text>
         </View>
       </View>
       <View>
