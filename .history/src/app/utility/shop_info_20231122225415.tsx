@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-na
 import { router } from 'expo-router'
 
 const handlePress = (): void => {
-  router.push('utility/edit_shop')
+  router.push('utility/shop_info')
 }
 
 const ShopInfo = (): JSX.Element => {

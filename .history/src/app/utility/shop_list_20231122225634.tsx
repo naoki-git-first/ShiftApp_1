@@ -2,9 +2,6 @@ import { router } from 'expo-router'
 import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
 
 const handlePress = (): void => {
-  router.push('utility/shop_info')
-}
-const create = (): void => {
   router.push('utility/create_shop')
 }
 
@@ -14,7 +11,7 @@ const ShopList = (): JSX.Element => {
       <TouchableOpacity style={styles.shopList} onPress={handlePress}>
           <Text style={styles.nameText}>店舗名</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={create}>
+      <TouchableOpacity onPress={handlePress}>
           <Text>作成</Text>
       </TouchableOpacity>
     </SafeAreaView>

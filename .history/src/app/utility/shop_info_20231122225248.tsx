@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-na
 import { router } from 'expo-router'
 
 const handlePress = (): void => {
-  router.push('utility/edit_shop')
+  router.push('utility/shop_info')
 }
 
 const ShopInfo = (): JSX.Element => {
@@ -24,7 +24,7 @@ const ShopInfo = (): JSX.Element => {
         <Text style={styles.text}>定休日：</Text>
       </View>
       <TouchableOpacity onPress={handlePress}>
-          <Text>編集</Text>
+          <Text>店舗名</Text>
       </TouchableOpacity>
     </SafeAreaView>
   )

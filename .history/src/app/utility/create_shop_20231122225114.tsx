@@ -1,11 +1,7 @@
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
 import { router } from 'expo-router'
 
-const handlePress = (): void => {
-  router.push('utility/edit_shop')
-}
-
-const ShopInfo = (): JSX.Element => {
+const CreateShop = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View>
@@ -23,9 +19,6 @@ const ShopInfo = (): JSX.Element => {
       <View>
         <Text style={styles.text}>定休日：</Text>
       </View>
-      <TouchableOpacity onPress={handlePress}>
-          <Text>編集</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -43,4 +36,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ShopInfo
+export default CreateShop
