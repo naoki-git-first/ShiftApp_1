@@ -15,7 +15,7 @@ const editShift = (): void => {
   router.push('utility/shift_shop_list')
 }
 const memberList = (): void => {
-  router.push('utility/member_shop_list')
+  router.push('utility/member_list')
 }
 const shopList = (): void => {
   router.push('utility/shop_list')
@@ -23,6 +23,9 @@ const shopList = (): void => {
 const wantedShift = (): void => {
   router.push('utility/wanted_shift')
 }
+// const  = (): void => {
+//   router.push('')
+// }
 
 const Home = (): JSX.Element => {
   return (

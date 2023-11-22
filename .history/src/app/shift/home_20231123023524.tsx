@@ -23,6 +23,9 @@ const shopList = (): void => {
 const wantedShift = (): void => {
   router.push('utility/wanted_shift')
 }
+// const  = (): void => {
+//   router.push('')
+// }
 
 const Home = (): JSX.Element => {
   return (
