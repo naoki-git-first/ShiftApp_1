@@ -42,36 +42,36 @@ const Home = (): JSX.Element => {
             <Text>ID: 0123</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={checkShift}>
-          <View style={styles.checkShift}>
+          <TouchableOpacity onPress={checkShift}>
+        <View style={styles.checkShift}>
             <Text>シフト確認   ＞</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={submitShift}>
-          <View style={styles.submitShift}>
+        </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={submitShift}>
+        <View style={styles.submitShift}>
             <Text>シフト提出   ＞</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={editShift}>
-          <View style={styles.editShift}>
+        </View>
+          </TouchableOpacity>
+        <View style={styles.editShift}>
+          <TouchableOpacity onPress={editShift}>
             <Text>シフト編集   ＞</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={memberList}>
-          <View style={styles.editShift}>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.editShift}>
+          <TouchableOpacity onPress={memberList}>
             <Text>メンバー管理   ＞</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={shopList}>
-          <View style={styles.editShift}>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.editShift}>
+          <TouchableOpacity onPress={shopList}>
             <Text>店舗管理   ＞</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={wantedShift}>
-          <View style={styles.editShift}>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.editShift}>
+          <TouchableOpacity onPress={wantedShift}>
             <Text>シフト募集   ＞</Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>

@@ -62,16 +62,16 @@ const Home = (): JSX.Element => {
             <Text>メンバー管理   ＞</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={shopList}>
-          <View style={styles.editShift}>
+        <View style={styles.editShift}>
+          <TouchableOpacity onPress={shopList}>
             <Text>店舗管理   ＞</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={wantedShift}>
-          <View style={styles.editShift}>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.editShift}>
+          <TouchableOpacity onPress={wantedShift}>
             <Text>シフト募集   ＞</Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
