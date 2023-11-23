@@ -2,16 +2,15 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 interface Props {
   buttonColor: string
-  children: JSX.Element
+  text: string
   textColor: string
-  onPress: () => void
 }
 
 const CircleButton = (props: Props): JSX.Element => {
-  const { children, buttonColor, textColor, onPress } = props
+  const { text, buttonColor, textColor } = props
   return (
-    <TouchableOpacity style={[styles.button, { backgroundColor: buttonColor }]} onPress={onPress}>
-      <Text style={[styles.buttonText, { color: textColor }]}>{children}</Text>
+    <TouchableOpacity style={[styles.button, { backgroundColor: buttonColor }]}>
+      <Text style={[styles.buttonText, { color: textColor }]}>{text}</Text>
     </TouchableOpacity>
   )
 }

@@ -1,5 +1,5 @@
 import { router } from 'expo-router'
-import { Text, View, SafeAreaView, StyleSheet } from 'react-native'
+import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 import CircleButton from '../../components/CircleButton'
@@ -16,7 +16,7 @@ const ManageShop = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ShopList text='梅田店' onPress={handlePress} />
-      <CircleButton buttonColor='#22ff22' textColor='white' onPress={create} >
+      <CircleButton buttonColor='#22ff22' textColor='white'>
         <Feather name='plus' size={40} />
       </CircleButton>
     </SafeAreaView>

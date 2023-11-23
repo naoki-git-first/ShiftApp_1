@@ -4,13 +4,12 @@ interface Props {
   buttonColor: string
   children: JSX.Element
   textColor: string
-  onPress: () => void
 }
 
 const CircleButton = (props: Props): JSX.Element => {
-  const { children, buttonColor, textColor, onPress } = props
+  const { children, buttonColor, textColor } = props
   return (
-    <TouchableOpacity style={[styles.button, { backgroundColor: buttonColor }]} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, { backgroundColor: buttonColor }]}>
       <Text style={[styles.buttonText, { color: textColor }]}>{children}</Text>
     </TouchableOpacity>
   )

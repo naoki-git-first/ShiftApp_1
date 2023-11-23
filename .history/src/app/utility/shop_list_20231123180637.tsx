@@ -1,6 +1,5 @@
 import { router } from 'expo-router'
-import { Text, View, SafeAreaView, StyleSheet } from 'react-native'
-import { Feather } from '@expo/vector-icons'
+import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
 
 import CircleButton from '../../components/CircleButton'
 import ShopList from '../../components/ShopList'
@@ -15,10 +14,11 @@ const create = (): void => {
 const ManageShop = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ShopList text='梅田店' onPress={handlePress} />
-      <CircleButton buttonColor='#22ff22' textColor='white' onPress={create} >
-        <Feather name='plus' size={40} />
-      </CircleButton>
+      <TouchableOpacity style={styles.shopList} onPress={handlePress}>
+          <Text style={styles.nameText}>店舗名</Text>
+      </TouchableOpacity>
+      <ShopList></ShopList>
+      <CircleButton text='+' buttonColor='#22ff22' textColor='white' />
     </SafeAreaView>
   )
 }
@@ -29,10 +29,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff'
   },
   shopList: {
-    height: 60,
+    flexDirection: 'row',
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#dddddd',
-    paddingVertical: 12
+    paddingVertical: 12,
+    paddingHorizontal: 8
   },
   nameText: {
     flex: 1,
