@@ -1,5 +1,5 @@
 import { router } from 'expo-router'
-import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { SafeAreaView, StyleSheet } from 'react-native'
 import List from '../../components/List'
 
 const handlePress = (): void => {
