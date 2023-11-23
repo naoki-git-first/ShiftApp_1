@@ -17,8 +17,13 @@ const SubmitForm = (): JSX.Element => {
           <TextInput style={styles.inputTime}/>
         </View>
         <View style={styles.rowContainer}>
-          <SquareButton text='一時保存' buttonColor='#2299ff' textColor='white' />
-          <SquareButton text='提出' buttonColor='#ff2299' textColor='white' />
+          <TouchableOpacity>
+          <Text style={styles.tempSaveButton}>一時保存</Text>
+            </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.submitButton}>提出</Text>
+          </TouchableOpacity>
+          <SquareButton />
         </View>
       </View>
     </SafeAreaView>
@@ -55,6 +60,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 4,
     margin: 4
+  },
+  tempSaveButton: {
+    backgroundColor: '#2299ff',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginVertical: 12,
+    marginHorizontal: 8
+  },
+  submitButton: {
+    backgroundColor: '#ff2299',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginVertical: 12,
+    marginHorizontal: 8
   }
 })
 

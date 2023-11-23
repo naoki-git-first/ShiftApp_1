@@ -1,6 +1,4 @@
-import { SafeAreaView, View, Text, StyleSheet, TextInput } from 'react-native'
-
-import SquareButton from '../../components/SquareButton'
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 
 const WantedShift = (): JSX.Element => {
   return (
@@ -24,8 +22,12 @@ const WantedShift = (): JSX.Element => {
           <Text style={styles.listInnerText}>日</Text>
         </View>
         <View style={styles.rowContainer}>
-          <SquareButton text='一時保存' buttonColor='#2299ff' textColor='white' />
-          <SquareButton text='提出' buttonColor='#ff2299' textColor='white' />
+          <TouchableOpacity>
+          <Text style={styles.tempSaveButton}>一時保存</Text>
+            </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.submitButton}>送信</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
