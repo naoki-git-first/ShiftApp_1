@@ -55,7 +55,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 4,
     margin: 4
-  }
+  },
+  tempSaveButton: {
+    backgroundColor: '#2299ff',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginVertical: 12,
+    marginHorizontal: 8
+  },
 })
 
 export default SubmitForm

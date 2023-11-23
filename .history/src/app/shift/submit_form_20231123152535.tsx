@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 4,
     margin: 4
-  }
+  },
 })
 
 export default SubmitForm
