@@ -24,10 +24,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 40,
-    bottom: 40
+    bottom: 40,
+    // ios用
+    shadowColor: '#000000',
+    shadowOpacity: 0.45,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 8 },
+    // andoid用
+    elevation: 8
   },
   buttonText: {
-    fontSize: 40,
+    fontSize: 40
   }
 })
 
