@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
 import { router, useNavigation } from 'expo-router'
+import List from '../../components/List'
 
 const handlePress = (): void => {
   router.push('shift/submit_form')
@@ -7,14 +8,12 @@ const handlePress = (): void => {
 const SubmitShift = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.SafeArea}>
-      <View>
+      <View style={styles.topBrock}>
         <Text style={styles.title}>店舗名</Text>
         <Text style={styles.subTitle}>募集中のシフト</Text>
       </View>
       <View>
-        <TouchableOpacity style={styles.acceptingShiftList} onPress={handlePress}>
-          <Text style={styles.acceptingShiftListText}>1/1 ~ 1/15 未提出 ＞</Text>
-        </TouchableOpacity>
+        <List text='1/1 ~ 1/15 　未提出' onPress={handlePress}/>
       </View>
     </SafeAreaView>
   )
@@ -24,6 +23,11 @@ const styles = StyleSheet.create({
   SafeArea: {
     flex: 1,
     backgroundColor: '#ffffff'
+  },
+  topBrock: {
+    backgroundColor: '#dd2222',
+    borderBottomWidth: 1,
+    borderColor: '#dddddd'
   },
   title: {
     fontSize: 32,

@@ -1,5 +1,6 @@
 import { router } from 'expo-router'
 import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import List from '../../components/List'
 
 const handlePress = (): void => {
   router.push('utility/member_list')
@@ -8,9 +9,7 @@ const handlePress = (): void => {
 const MemberShopList = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity style={styles.shopList} onPress={handlePress}>
-          <Text style={styles.nameText}>店舗名</Text>
-      </TouchableOpacity>
+      <List text='梅田店' onPress={handlePress} />
     </SafeAreaView>
   )
 }

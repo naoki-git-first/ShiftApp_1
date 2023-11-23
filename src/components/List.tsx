@@ -5,7 +5,7 @@ interface Props {
   text: string
 }
 
-const ShopList = (props: Props): JSX.Element => {
+const List = (props: Props): JSX.Element => {
   const { text, onPress } = props
   return (
     <TouchableOpacity style={styles.listContainer} onPress={onPress}>
@@ -17,7 +17,6 @@ const ShopList = (props: Props): JSX.Element => {
 const styles = StyleSheet.create({
   text: {
     fontSize: 32,
-    fontWeight: 'bold',
     textAlign: 'center'
   },
   listContainer: {
@@ -27,4 +26,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ShopList
+export default List

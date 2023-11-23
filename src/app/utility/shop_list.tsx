@@ -1,9 +1,9 @@
 import { router } from 'expo-router'
-import { Text, View, SafeAreaView, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 import CircleButton from '../../components/CircleButton'
-import ShopList from '../../components/ShopList'
+import List from '../../components/List'
 
 const handlePress = (): void => {
   router.push('utility/shop_info')
@@ -15,7 +15,7 @@ const create = (): void => {
 const ManageShop = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ShopList text='梅田店' onPress={handlePress} />
+      <List text='梅田店' onPress={handlePress} />
       <CircleButton buttonColor='#22ff22' textColor='white' onPress={create} >
         <Feather name='plus' size={40} />
       </CircleButton>
