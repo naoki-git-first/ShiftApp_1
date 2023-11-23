@@ -1,6 +1,5 @@
 import { router } from 'expo-router'
 import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
-import CircleButton from '../../components/CircleButton'
 
 const handlePress = (): void => {
   router.push('utility/shop_info')
@@ -15,7 +14,9 @@ const ShopList = (): JSX.Element => {
       <TouchableOpacity style={styles.shopList} onPress={handlePress}>
           <Text style={styles.nameText}>店舗名</Text>
       </TouchableOpacity>
-      <CircleButton text='+' buttonColor='#22ff22' textColor='white' />
+      <TouchableOpacity onPress={create}>
+          <Text>作成</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
