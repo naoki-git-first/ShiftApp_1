@@ -2,6 +2,12 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-na
 import { router, useNavigation } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import List from '../../components/List'
+import { useEffect } from 'react'
+import LogOutButton from '../../components/LogOutButton'
+
+const logOut = (): void => {
+  router.replace('auth/log_in')
+}
 
 const profile = (): void => {
   router.push('user/profile')
@@ -26,6 +32,13 @@ const wantedShift = (): void => {
 }
 
 const Home = (): JSX.Element => {
+  const navigation = useNavigation()
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => { return <LogOutButton onPress={logOut}/> }
+    })
+  }, [])
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>

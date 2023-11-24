@@ -5,6 +5,7 @@ import {
 
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
+import SquareButton from '../../components/SquareButton'
 // import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 // import { auth } from '../../config'
@@ -24,6 +25,10 @@ import { useState } from 'react'
 //       Alert.alert(message)
 //     })
 // }
+
+const onPress = (): void => {
+  router.replace('shift/home')
+}
 
 const SignUp = (): JSX.Element => {
   const [email, setEmail] = useState('')
@@ -59,7 +64,10 @@ const SignUp = (): JSX.Element => {
             </TouchableOpacity>
           </Link>
         </View>
-      </View>
+
+          <SquareButton text='お試し' textColor='white' buttonColor='#dddddd' onPress={onPress} />
+
+        </View>
     </View>
   )
 }

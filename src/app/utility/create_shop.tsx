@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import CircleButton from '../../components/CircleButton'
 
 const handlePress = (): void => {
-  router.push('utility/shop_info')
+  router.replace('utility/shop_info')
 }
 
 const CreateShop = (): JSX.Element => {
