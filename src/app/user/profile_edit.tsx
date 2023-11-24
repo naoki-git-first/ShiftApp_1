@@ -1,5 +1,12 @@
-import { View, Text, SafeAreaView, StyleSheet, Picker } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Alert } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
+import { MaterialIcons } from '@expo/vector-icons'
+
+import CircleButton from '../../components/CircleButton'
+
+const profileEdit = (): void => {
+  Alert.alert('変更しました！')
+}
 
 const Profile = (): JSX.Element => {
   return (
@@ -30,6 +37,9 @@ const Profile = (): JSX.Element => {
         <Text style={styles.baseText}>パスワード：</Text>
         <TextInput style={styles.input}/>
       </View>
+      <CircleButton buttonColor='#22ff22' textColor='white' onPress={profileEdit}>
+        <MaterialIcons name='done-all' size={40} />
+      </CircleButton>
     </SafeAreaView>
   )
 }

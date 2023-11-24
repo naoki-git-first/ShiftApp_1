@@ -1,8 +1,11 @@
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
 import { router } from 'expo-router'
+import { MaterialIcons } from '@expo/vector-icons'
+
+import CircleButton from '../../components/CircleButton'
 
 const handlePress = (): void => {
-  router.push('utility/shop_info')
+  router.replace('utility/shop_info')
 }
 
 const CreateShop = (): JSX.Element => {
@@ -23,9 +26,9 @@ const CreateShop = (): JSX.Element => {
       <View>
         <Text style={styles.text}>定休日：</Text>
       </View>
-      <TouchableOpacity onPress={handlePress}>
-          <Text>確定</Text>
-      </TouchableOpacity>
+      <CircleButton buttonColor='#22ff22' textColor='white' onPress={handlePress}>
+        <MaterialIcons name='done-all' size={40} />
+      </CircleButton>
     </SafeAreaView>
   )
 }
