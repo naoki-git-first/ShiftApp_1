@@ -1,41 +1,32 @@
-// import { useState } from 'react'
+import { groupBy } from 'lodash'
 import { SafeAreaView } from 'react-native'
-import { Calendar, CalendarProvider, ExpandableCalendar, TimelineList } from 'react-native-calendars'
+import {
+  CalendarProvider,
+  ExpandableCalendar,
+  TimelineList,
+  type TimelineEventProps,
+  CalendarUtils
+} from 'react-native-calendars'
 
 const calendar = (): JSX.Element => {
-  // const [markedDates, setMarkedDates] = useState({}) // setMarkedDatesに新たな値が来たら更新
+  // 仮のイベントデータ
+  const EVENTS: TimelineEventProps[] = [
+    { id: '1', start: '2023-11-24T09:00:00', end: '2023-11-24T10:30:00', title: 'Meeting 1', color: 'blue' },
+    { id: '2', start: '2023-11-23T11:00:00', end: '2023-11-23T12:30:00', title: 'Meeting 2', color: 'green' }
+  ]
 
-  // const handleDayPress = (day: any): void => {
-  //   const selectedDate = day.dateString // タップされた日付を'yyyy-mm-dd'の形で取得
+  // 日付ごとにグループ化(date : EVENTS[]の形)
+  const eventsByDate = groupBy(EVENTS, e => CalendarUtils.getCalendarDateString(e.start)) as Record<string, TimelineEventProps[]>
 
-  //   // selectedDateに'blue'の〇マークをつける
-  //   const newMarkedDates = { [selectedDate]: { selected: true, selectedColor: 'blue' } }
-  //   setMarkedDates(newMarkedDates)
-  // }
-  const newEvent = {
-    id: 'draft',
-    start: '10:00:00',
-    end: '12:00:00',
-    title: 'New Event',
-    color: 'white'
-  }
-  const eventsByDate = {
-    '2023-11-23': [newEvent]
-  }
   return (
     <SafeAreaView style = {{ flex: 1 }}>
-      {/* <Calendar
-        enableSwipeMonths={true} // スワイプで月を移動できるようにする
-        onDayPress={handleDayPress} // 日付がタップされたときhandleDayPressを呼び出す
-        markedDates={markedDates} // markedDatesに基づいて日付にマークをつける
-      /> */}
       <CalendarProvider
         date={new Date().toString()} // カレンダーの初期日付に現在の日付をString型で設定
       >
-        <ExpandableCalendar
+        <ExpandableCalendar // ExpandableCalendarの表示
         />
-        <TimelineList
-          events={eventsByDate}
+        <TimelineList // TimelineListの表示
+          events={eventsByDate} // イベントリストを格納(date : EVENTS[]の形)
         />
       </CalendarProvider>
     </SafeAreaView>
