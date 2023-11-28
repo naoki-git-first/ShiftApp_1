@@ -13,7 +13,7 @@ const profile = (): void => {
   router.push('user/profile')
 }
 const checkShift = (): void => {
-  router.push('shift/check')
+  router.push('shift/calendar')
 }
 const submitShift = (): void => {
   router.push('shift/submit')

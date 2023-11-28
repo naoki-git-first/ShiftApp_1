@@ -4,7 +4,7 @@ import { SafeAreaView, StyleSheet } from 'react-native'
 import List from '../../components/List'
 
 const handlePress = (): void => {
-  router.push('shift/edit')
+  router.push('shift/calendar2')
 }
 
 const ShiftShopList = (): JSX.Element => {
