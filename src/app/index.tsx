@@ -13,7 +13,7 @@ const Index = (): JSX.Element => {
   //   })
   // }, [])
 
-  return <Redirect href='shift/calendar2' />
+  return <Redirect href='shift/calendar' />
 }
 
 export default Index
