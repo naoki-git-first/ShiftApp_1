@@ -6,25 +6,24 @@ import {
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
 import SquareButton from '../../components/SquareButton'
-// import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
-// import { auth } from '../../config'
-// import Button from '../../components/Button'
+import { auth } from '../../config'
 
-// const handlePress = (email: string, password: string): void => {
-//   // 会員登録
-//   console.log(email, password)
-//   createUserWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//       console.log(userCredential.user.uid)
-//       router.replace('/memo/list')
-//     })
-//     .catch((error) => {
-//       const { code, message } = error
-//       console.log(code, message)
-//       Alert.alert(message)
-//     })
-// }
+const handlePress = (email: string, password: string): void => {
+  // 会員登録
+  console.log(email, password)
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log(userCredential.user.uid)
+      router.replace('/shift/home')
+    })
+    .catch((error) => {
+      const { code, message } = error
+      console.log(code, message)
+      Alert.alert(message)
+    })
+}
 
 const onPress = (): void => {
   router.replace('shift/home')
@@ -55,7 +54,7 @@ const SignUp = (): JSX.Element => {
           placeholder='Passeord'
           textContentType='password'
         />
-        {/* <Button label='Submit' onPress={() => { handlePress(email, password) }} /> */}
+        <SquareButton text='サインイン' textColor='white' buttonColor='blue' onPress={() => { handlePress(email, password) }} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registered?</Text>
           <Link href='/auth/log_in' asChild replace>

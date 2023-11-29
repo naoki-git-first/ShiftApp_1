@@ -14,17 +14,13 @@ const handlePress = (email: string, password: string): void => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log(userCredential.user.uid)
-      router.replace('/memo/list')
+      router.replace('/shift/home')
     })
     .catch((error) => {
       const { code, message } = error
       console.log(code, message)
       Alert.alert(message)
     })
-}
-
-const onPress = (): void => {
-  router.replace('shift/home')
 }
 
 const LogIn = (): JSX.Element => {
@@ -52,7 +48,7 @@ const LogIn = (): JSX.Element => {
           placeholder='Passeord'
           textContentType='password'
         />
-        <SquareButton text='ログイン' textColor='white' buttonColor='blue' onPress={() => {onPress}}/>
+        <SquareButton text='ログイン' textColor='white' buttonColor='blue' onPress={() => { handlePress(email, password) }}/>
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not register</Text>
           <Link href='/auth/sign_up' asChild replace>
