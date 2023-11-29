@@ -1,16 +1,29 @@
-import { View, Text, SafeAreaView, StyleSheet, Alert } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import CircleButton from '../../components/CircleButton'
+import { useState } from 'react'
 
 const profileEdit = (): void => {
   Alert.alert('変更しました！')
 }
 
 const Profile = (): JSX.Element => {
+  const [userName, setUserName] = useState('')
+
+  const [mailAddress, setMailAddress] = useState('')
+
+  const [password, setPassword] = useState('')
+
+  const disMissKeyBoard = (): void => {
+    Keyboard.dismiss()
+  }
+
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <TouchableWithoutFeedback onPress={disMissKeyBoard}>
+      <SafeAreaView style={styles.safeArea}>
+
       <View>
         <Text style={styles.shopNameText}>店名</Text>
       </View>
@@ -20,7 +33,7 @@ const Profile = (): JSX.Element => {
         </View>
         <View style={styles.rowContainer}>
           <Text style={styles.baseText}>名前： </Text>
-          <TextInput style={styles.input}/>
+          <TextInput style={styles.input} onChangeText={(_userName) => setUserName(_userName)}/>
         </View>
       </View>
       <View>
@@ -31,16 +44,22 @@ const Profile = (): JSX.Element => {
       </View>
       <View style={styles.rowContainer}>
         <Text style={styles.baseText}>メールアドレス：</Text>
-        <TextInput style={styles.input}/>
+        <TextInput style={styles.input} onChangeText={(_mailAddress) => setMailAddress(_mailAddress)}/>
       </View>
       <View style={styles.rowContainer}>
         <Text style={styles.baseText}>パスワード：</Text>
-        <TextInput style={styles.input}/>
+        <TextInput style={styles.input} onChangeText={(_password) => setPassword(_password)}/>
+      </View>
+      <View>
+      <Text>{userName}</Text>
+      <Text>{mailAddress}</Text>
+      <Text>{password}</Text>
       </View>
       <CircleButton buttonColor='#22ff22' textColor='white' onPress={profileEdit}>
         <MaterialIcons name='done-all' size={40} />
       </CircleButton>
-    </SafeAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   )
 }
 
