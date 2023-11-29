@@ -6,24 +6,22 @@ import {
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
 import SquareButton from '../../components/SquareButton'
-// import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
-// import Button from '../../components/Button'
-// import { auth } from '../../config'
+import { auth } from '../../config'
 
-// const handlePress = (email: string, password: string): void => {
-  // ログイン
-//   signInWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//       console.log(userCredential.user.uid)
-//       router.replace('/memo/list')
-//     })
-//     .catch((error) => {
-//       const { code, message } = error
-//       console.log(code, message)
-//       Alert.alert(message)
-//     })
-// }
+const handlePress = (email: string, password: string): void => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log(userCredential.user.uid)
+      router.replace('/memo/list')
+    })
+    .catch((error) => {
+      const { code, message } = error
+      console.log(code, message)
+      Alert.alert(message)
+    })
+}
 
 const onPress = (): void => {
   router.replace('shift/home')
@@ -54,7 +52,7 @@ const LogIn = (): JSX.Element => {
           placeholder='Passeord'
           textContentType='password'
         />
-        {/* <Button label='Submit' onPress={() => { handlePress(email, password) }} /> */}
+        <SquareButton text='ログイン' textColor='white' buttonColor='blue' onPress={() => {onPress}}/>
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not register</Text>
           <Link href='/auth/sign_up' asChild replace>
@@ -63,9 +61,6 @@ const LogIn = (): JSX.Element => {
             </TouchableOpacity>
           </Link>
         </View>
-
-          <SquareButton text='お試し' textColor='white' buttonColor='#dddddd' onPress={onPress} />
-
       </View>
     </View>
   )
