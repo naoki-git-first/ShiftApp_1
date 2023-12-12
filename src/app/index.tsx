@@ -13,7 +13,7 @@ const Index = (): JSX.Element => {
   //   })
   // }, [])
 
-  return <Redirect href='auth/log_in`' />
+  return <Redirect href='shift/firebase_test' />
 }
 
 export default Index
