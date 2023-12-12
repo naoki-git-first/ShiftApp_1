@@ -5,10 +5,6 @@ import List from '../../components/List'
 import { useEffect } from 'react'
 import LogOutButton from '../../components/LogOutButton'
 
-const logOut = (): void => {
-  router.replace('auth/log_in')
-}
-
 const profile = (): void => {
   router.push('user/profile')
 }
@@ -35,7 +31,7 @@ const Home = (): JSX.Element => {
   const navigation = useNavigation()
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => { return <LogOutButton onPress={logOut}/> }
+      headerRight: () => { return <LogOutButton /> }
     })
   }, [])
 

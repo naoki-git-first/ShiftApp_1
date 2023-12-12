@@ -33,7 +33,15 @@ const Profile = (): JSX.Element => {
         </View>
         <View style={styles.rowContainer}>
           <Text style={styles.baseText}>名前： </Text>
-          <TextInput style={styles.input} onChangeText={(_userName) => setUserName(_userName)}/>
+          <TextInput
+            style={styles.input}
+            value={userName}
+            onChangeText={(text) => { setUserName(text) }}
+            // autoCapitalize='none'
+            // keyboardType='email-address'
+            // placeholder='Email Address'
+            // textContentType='emailAddress'
+          />
         </View>
       </View>
       <View>
@@ -44,11 +52,27 @@ const Profile = (): JSX.Element => {
       </View>
       <View style={styles.rowContainer}>
         <Text style={styles.baseText}>メールアドレス：</Text>
-        <TextInput style={styles.input} onChangeText={(_mailAddress) => setMailAddress(_mailAddress)}/>
+        <TextInput
+          style={styles.input}
+          value={mailAddress}
+          onChangeText={(text) => { setMailAddress(text) }}
+          // autoCapitalize='none'
+          // keyboardType='email-address'
+          // placeholder='Email Address'
+          // textContentType='emailAddress'
+        />
       </View>
       <View style={styles.rowContainer}>
         <Text style={styles.baseText}>パスワード：</Text>
-        <TextInput style={styles.input} onChangeText={(_password) => setPassword(_password)}/>
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={(text) => { setPassword(text) }}
+          // autoCapitalize='none'
+          secureTextEntry
+          // placeholder='Email Address'
+          textContentType='password'
+        />
       </View>
       <View>
       <Text>{userName}</Text>
