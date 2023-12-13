@@ -9,6 +9,21 @@ import {
 } from 'react-native-calendars'
 
 const calendar = (): JSX.Element => {
+  // 各日付に対して複数のドットを指定
+  const MyShifts = {
+    '2023-12-15': {
+      dots: [
+        { key: '1', color: 'red' }
+      ]
+    },
+    '2023-12-20': {
+      dots: [
+        { key: '3', color: '#00ff00' },
+        { key: '4', color: 'rgb(0, 0, 255)' }
+      ]
+    }
+  }
+
   // 仮のイベントデータ
   const EVENTS: TimelineEventProps[] = [
     { id: '1', start: '2023-11-24T09:00:00', end: '2023-11-24T10:30:00', title: 'Meeting 1', color: 'blue' },
@@ -27,6 +42,8 @@ const calendar = (): JSX.Element => {
         date={new Date().toString()} // カレンダーの初期日付に現在の日付をString型で設定
       >
         <ExpandableCalendar // ExpandableCalendarの表示
+        markingType={'multi-dot'}
+        markedDates={MyShifts}
         />
         <TimelineList // TimelineListの表示
           events={eventsByDate} // イベントリストを格納(date : EVENTS[]の形)
