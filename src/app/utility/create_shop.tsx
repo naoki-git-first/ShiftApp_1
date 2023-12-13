@@ -16,13 +16,13 @@ const handlePress = (
   businessDay: string,
   regularClosingDay: string
 ): void => {
-  console.log('yea')
+  console.log(address)
 
   if (auth.currentUser === null) { return }
-  console.log('yea')
+  console.log(shopName)
 
   const ref = collection(db, `users/${auth.currentUser.uid}/shops`)
-  console.log('3')
+  console.log(shopManager)
   addDoc(ref, {
     shopName,
     shopManager,
@@ -49,7 +49,7 @@ const CreateShop = (): JSX.Element => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View>
+      <View style={styles.rowContainer}>
         <Text style={styles.text}>店舗名：</Text>
         <TextInput
             style={styles.input}
@@ -61,7 +61,7 @@ const CreateShop = (): JSX.Element => {
             // textContentType='emailAddress'
           />
       </View>
-      <View>
+      <View style={styles.rowContainer}>
         <Text style={styles.text}>店長：</Text>
         <TextInput
             style={styles.input}
@@ -73,7 +73,7 @@ const CreateShop = (): JSX.Element => {
             // textContentType='emailAddress'
           />
       </View>
-      <View>
+      <View style={styles.rowContainer}>
         <Text style={styles.text}>住所：</Text>
         <TextInput
             style={styles.input}
@@ -85,7 +85,7 @@ const CreateShop = (): JSX.Element => {
             // textContentType='emailAddress'
           />
       </View>
-      <View>
+      <View style={styles.rowContainer}>
         <Text style={styles.text}>営業日：</Text>
         <TextInput
             style={styles.input}
@@ -97,7 +97,7 @@ const CreateShop = (): JSX.Element => {
             // textContentType='emailAddress'
           />
       </View>
-      <View>
+      <View style={styles.rowContainer}>
         <Text style={styles.text}>定休日：</Text>
         <TextInput
             style={styles.input}
@@ -142,6 +142,10 @@ const styles = StyleSheet.create({
     borderColor: '#0000ff',
     borderRadius: 5,
     padding: 6
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 24
   }
 })
 
