@@ -16,7 +16,7 @@ const handlePress = (email: string, password: string): void => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log(userCredential.user.uid)
-      router.replace('/shift/home')
+      router.replace('/home')
     })
     .catch((error) => {
       const { code, message } = error
@@ -26,7 +26,7 @@ const handlePress = (email: string, password: string): void => {
 }
 
 const onPress = (): void => {
-  router.replace('shift/home')
+  router.replace('/home')
 }
 
 const SignUp = (): JSX.Element => {

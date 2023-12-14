@@ -24,13 +24,15 @@ const Profile = (): JSX.Element => {
         const {
           userName,
           mailAddress,
-          password
+          password,
+          position
         } = profileDoc.data() as tProfile
         setProfile({
           id: userId,
           userName,
           mailAddress,
-          password
+          password,
+          position
         })
       }
     })
@@ -50,7 +52,7 @@ const Profile = (): JSX.Element => {
         </View>
       </View>
       <View>
-        <Text style={styles.text}>役職：</Text>
+        <Text style={styles.text}>役職：{profile?.position}</Text>
       </View>
       <View>
         <Text style={styles.text}>店舗：</Text>

@@ -14,7 +14,7 @@ import { FlatList } from 'react-native-gesture-handler'
 //   router.push('utility/shop_info')
 // }
 const create = (): void => {
-  router.push('utility/create_shop')
+  router.push('shops/create_shop')
 }
 
 const ManageShop = (): JSX.Element => {

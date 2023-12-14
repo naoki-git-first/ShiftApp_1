@@ -35,6 +35,7 @@ const Profile = (): JSX.Element => {
   const [userName, setUserName] = useState('')
   const [mailAddress, setMailAddress] = useState('')
   const [password, setPassword] = useState('')
+  const [position, setPosition] = useState('')
 
   const disMissKeyBoard = (): void => {
     Keyboard.dismiss()
@@ -49,9 +50,11 @@ const Profile = (): JSX.Element => {
         const RemoteUserName = docRef?.data()?.userName
         const RemoteMailAddress = docRef?.data()?.mailAddress
         const RemotePassword = docRef?.data()?.password
+        const RemotePosition = docRef?.data()?.position
         setUserName(RemoteUserName)
         setMailAddress(RemoteMailAddress)
         setPassword(RemotePassword)
+        setPosition(RemotePosition)
       })
       .catch((error) => {
         console.log(error)
@@ -83,7 +86,7 @@ const Profile = (): JSX.Element => {
         </View>
       </View>
       <View>
-        <Text style={styles.baseText}>役職：</Text>
+        <Text style={styles.baseText}>役職：{position}</Text>
       </View>
       <View>
         <Text style={styles.baseText}>店舗：</Text>

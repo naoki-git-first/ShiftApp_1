@@ -3,6 +3,7 @@ interface tProfile {
   userName: string
   mailAddress: string
   password: string
+  position: string
 }
 
 export type { tProfile }

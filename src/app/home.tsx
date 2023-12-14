@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 import { router, useNavigation } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import List from '../../components/List'
+import List from '../components/List'
 import { useEffect, useState } from 'react'
-import LogOutButton from '../../components/LogOutButton'
-import { type tProfile } from '../types/profile'
-import { auth, db } from '../../config'
+import LogOutButton from '../components/LogOutButton'
+import { type tProfile } from './types/profile'
+import { auth, db } from '../config'
 import { doc, onSnapshot } from 'firebase/firestore'
 
 const authProfile = (): void => {
@@ -24,7 +24,7 @@ const memberList = (): void => {
   router.push('utility/member_shop_list')
 }
 const shopList = (): void => {
-  router.push('utility/shop_list')
+  router.push('shops/shop_list')
 }
 const wantedShift = (): void => {
   router.push('utility/wanted_shift')
@@ -48,13 +48,15 @@ const Home = (): JSX.Element => {
         const {
           userName,
           mailAddress,
-          password
+          password,
+          position
         } = profileDoc.data() as tProfile
         setProfile({
           id: userId,
           userName,
           mailAddress,
-          password
+          password,
+          position
         })
       }
     })

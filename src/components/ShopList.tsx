@@ -14,7 +14,7 @@ const List = (props: Props): JSX.Element | null => {
   if (shopName === null) { return null }
   return (
     <Link
-    href={{ pathname: 'utility/shop_info', params: { id: shop.id } }}
+    href={{ pathname: 'shops/shop_info', params: { id: shop.id } }}
     asChild
   >
       <TouchableOpacity style={styles.listContainer} onPress={onPress}>

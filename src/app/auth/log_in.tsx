@@ -14,7 +14,7 @@ const handlePress = (email: string, password: string): void => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log(userCredential.user.uid)
-      router.replace('/shift/home')
+      router.replace('/home')
     })
     .catch((error) => {
       const { code, message } = error
