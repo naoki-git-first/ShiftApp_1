@@ -25,10 +25,6 @@ const handlePress = (email: string, password: string): void => {
     })
 }
 
-const onPress = (): void => {
-  router.replace('/home')
-}
-
 const SignUp = (): JSX.Element => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -63,10 +59,7 @@ const SignUp = (): JSX.Element => {
             </TouchableOpacity>
           </Link>
         </View>
-
-          <SquareButton text='お試し' textColor='white' buttonColor='#dddddd' onPress={onPress} />
-
-        </View>
+      </View>
     </View>
   )
 }

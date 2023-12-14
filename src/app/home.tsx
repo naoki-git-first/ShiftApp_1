@@ -8,26 +8,26 @@ import { type tProfile } from './types/profile'
 import { auth, db } from '../config'
 import { doc, onSnapshot } from 'firebase/firestore'
 
-const authProfile = (): void => {
+const authProfile = (): void => { // プロフィール編集
   router.push('user/profile')
 }
-const checkShift = (): void => {
+const checkShift = (): void => { // シフト確認
   router.push('shift/calendar')
 }
-const submitShift = (): void => {
+const submitShift = (): void => { // シフト提出
   router.push('shift/submit')
 }
-const editShift = (): void => {
+const editShift = (): void => { // シフト編集
   router.push('utility/shift_shop_list')
 }
-const memberList = (): void => {
+const wantedShift = (): void => { // シフト募集
+  router.push('utility/wanted_shift')
+}
+const memberList = (): void => { // メンバー管理
   router.push('utility/member_shop_list')
 }
-const shopList = (): void => {
+const shopList = (): void => { // 店舗管理
   router.push('shops/shop_list')
-}
-const wantedShift = (): void => {
-  router.push('utility/wanted_shift')
 }
 
 const Home = (): JSX.Element => {
@@ -62,6 +62,10 @@ const Home = (): JSX.Element => {
     })
     return unsubscribe
   }, [])
+  // 役職によって表示するコンポーネントを変更するためのするための変数
+  const admin = profile?.position === '管理者'
+  const manager = profile?.position === '店長'
+  const worker = profile?.position === 'アルバイト'
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -77,12 +81,15 @@ const Home = (): JSX.Element => {
             <Text>{profile?.mailAddress}</Text>
           </View>
         </View>
-        <List text='シフト確認' onPress={checkShift} />
-        <List text='シフト提出' onPress={submitShift} />
-        <List text='シフト編集' onPress={editShift} />
-        <List text='メンバー管理' onPress={memberList} />
-        <List text='店舗管理' onPress={shopList} />
-        <List text='シフト募集' onPress={wantedShift} />
+        {/* アルバイト表示 */}
+        {worker && <List text='シフト確認' onPress={checkShift} />}
+        {worker && <List text='シフト提出' onPress={submitShift} />}
+        {/* 店長表示 */}
+        {manager && <List text='シフト編集' onPress={editShift} />}
+        {manager && <List text='シフト募集' onPress={wantedShift} />}
+        {manager && <List text='メンバー管理' onPress={memberList} />}
+        {/* 管理者表示 */}
+        {admin && <List text='店舗管理' onPress={shopList} />}
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>

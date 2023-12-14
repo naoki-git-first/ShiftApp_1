@@ -11,7 +11,8 @@ import { router } from 'expo-router'
 const profileEdit = (
   userName: string,
   mailAddress: string,
-  password: string
+  password: string,
+  position: string
 ): void => {
   if (auth.currentUser === null) { return }
   const userId = auth.currentUser.uid
@@ -20,6 +21,7 @@ const profileEdit = (
     userName,
     mailAddress,
     password,
+    position,
     updatedAt: Timestamp.fromDate(new Date())
   })
     .then((docRef) => {
@@ -85,8 +87,17 @@ const Profile = (): JSX.Element => {
           />
         </View>
       </View>
-      <View>
-        <Text style={styles.baseText}>役職：{position}</Text>
+      <View style={styles.rowContainer}>
+        <Text style={styles.baseText}>役職：</Text>
+        <TextInput
+          style={styles.input}
+          value={position}
+          onChangeText={(text) => { setPosition(text) }}
+          // autoCapitalize='none'
+          // keyboardType='email-address'
+          // placeholder='Email Address'
+          // textContentType='emailAddress'
+        />
       </View>
       <View>
         <Text style={styles.baseText}>店舗：</Text>
@@ -120,7 +131,8 @@ const Profile = (): JSX.Element => {
         profileEdit(
           userName,
           mailAddress,
-          password
+          password,
+          position
         )
       }}>
         <MaterialIcons name='done-all' size={40} />
