@@ -4,16 +4,36 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 import CircleButton from '../../components/CircleButton'
 import { useState } from 'react'
+import { auth, db } from '../../config'
+import { Timestamp, setDoc, addDoc, collection, doc } from 'firebase/firestore'
+import { router } from 'expo-router'
 
-const profileEdit = (): void => {
-  Alert.alert('変更しました！')
+const profileEdit = (
+  userName: string,
+  mailAddress: string,
+  password: string
+): void => {
+  if (auth.currentUser === null) { return }
+  const userId = auth.currentUser.uid
+  const ref = doc(db, 'users', userId)
+  setDoc(ref, {
+    userName,
+    mailAddress,
+    password,
+    updatedAt: Timestamp.fromDate(new Date())
+  })
+    .then((docRef) => {
+      console.log('success', docRef)
+      router.replace('user/profile')
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 const Profile = (): JSX.Element => {
   const [userName, setUserName] = useState('')
-
   const [mailAddress, setMailAddress] = useState('')
-
   const [password, setPassword] = useState('')
 
   const disMissKeyBoard = (): void => {
@@ -74,12 +94,14 @@ const Profile = (): JSX.Element => {
           textContentType='password'
         />
       </View>
-      <View>
-      <Text>{userName}</Text>
-      <Text>{mailAddress}</Text>
-      <Text>{password}</Text>
-      </View>
-      <CircleButton buttonColor='#22ff22' textColor='white' onPress={profileEdit}>
+      <CircleButton buttonColor='#22ff22' textColor='white'
+      onPress={() => {
+        profileEdit(
+          userName,
+          mailAddress,
+          password
+        )
+      }}>
         <MaterialIcons name='done-all' size={40} />
       </CircleButton>
       </SafeAreaView>
