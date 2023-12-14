@@ -3,9 +3,9 @@ import { TextInput } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import CircleButton from '../../components/CircleButton'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { auth, db } from '../../config'
-import { Timestamp, setDoc, addDoc, collection, doc } from 'firebase/firestore'
+import { Timestamp, setDoc, addDoc, collection, doc, getDoc } from 'firebase/firestore'
 import { router } from 'expo-router'
 
 const profileEdit = (
@@ -23,11 +23,11 @@ const profileEdit = (
     updatedAt: Timestamp.fromDate(new Date())
   })
     .then((docRef) => {
-      console.log('success', docRef)
-      router.replace('user/profile')
+      router.back()
     })
     .catch((error) => {
       console.log(error)
+      Alert.alert('更新に失敗しました')
     })
 }
 
@@ -39,6 +39,24 @@ const Profile = (): JSX.Element => {
   const disMissKeyBoard = (): void => {
     Keyboard.dismiss()
   }
+
+  useEffect(() => {
+    if (auth.currentUser === null) { return }
+    const userId = auth.currentUser.uid
+    const ref = doc(db, 'users', userId)
+    getDoc(ref)
+      .then((docRef) => {
+        const RemoteUserName = docRef?.data()?.userName
+        const RemoteMailAddress = docRef?.data()?.mailAddress
+        const RemotePassword = docRef?.data()?.password
+        setUserName(RemoteUserName)
+        setMailAddress(RemoteMailAddress)
+        setPassword(RemotePassword)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
 
   return (
     <TouchableWithoutFeedback onPress={disMissKeyBoard}>
