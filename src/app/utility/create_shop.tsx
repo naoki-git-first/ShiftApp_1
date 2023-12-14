@@ -33,7 +33,7 @@ const handlePress = (
   })
     .then((docRef) => {
       console.log('success', docRef.id)
-      router.replace('utility/shop_info')
+      router.back()
     })
     .catch((error) => {
       console.log(error, 'エラー')

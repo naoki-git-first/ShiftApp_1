@@ -1,5 +1,3 @@
-import { type Timestamp } from 'firebase/firestore'
-
 interface tProfile {
   id: string
   userName: string

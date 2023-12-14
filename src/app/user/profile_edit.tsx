@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import CircleButton from '../../components/CircleButton'
 import { useEffect, useState } from 'react'
 import { auth, db } from '../../config'
-import { Timestamp, setDoc, addDoc, collection, doc, getDoc } from 'firebase/firestore'
+import { Timestamp, setDoc, doc, getDoc } from 'firebase/firestore'
 import { router } from 'expo-router'
 
 const profileEdit = (

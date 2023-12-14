@@ -10,9 +10,9 @@ import { db, auth } from '../../config'
 import { type Shop } from '../types/shop'
 import { FlatList } from 'react-native-gesture-handler'
 
-const handlePress = (): void => {
-  router.push('utility/shop_info')
-}
+// const handlePress = (): void => {
+//   router.push('utility/shop_info')
+// }
 const create = (): void => {
   router.push('utility/create_shop')
 }
@@ -24,6 +24,7 @@ const ManageShop = (): JSX.Element => {
     const ref = collection(db, `users/${auth.currentUser.uid}/shops`)
     const q = query(ref, orderBy('updatedAt', 'desc'))
     const unsubscribe = onSnapshot(q, (snapshot) => {
+      // if (snapshot.exists()) {
       const remoteShops: Shop[] = []
       snapshot.forEach((doc) => {
         const { shopName, shopManager, address, businessDay, regularClosingDay, updatedAt } = doc.data()
@@ -38,6 +39,7 @@ const ManageShop = (): JSX.Element => {
           updatedAt
         })
       })
+      // }
       setShops(remoteShops)
     })
     return unsubscribe

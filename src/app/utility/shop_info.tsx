@@ -8,8 +8,8 @@ import { type Shop } from '../types/shop'
 import { auth, db } from '../../config'
 import { doc, onSnapshot } from 'firebase/firestore'
 
-const handlePress = (): void => {
-  router.push('utility/edit_shop')
+const handlePress = (id: string): void => {
+  router.push({ pathname: 'utility/edit_shop', params: { id } })
 }
 
 const ShopInfo = (): JSX.Element => {
@@ -56,7 +56,7 @@ const ShopInfo = (): JSX.Element => {
       <View>
         <Text style={styles.text}>定休日：{shop?.regularClosingDay}</Text>
       </View>
-      <CircleButton buttonColor='#22ff22' textColor='white' onPress={handlePress}>
+      <CircleButton buttonColor='#22ff22' textColor='white' onPress={() => { handlePress(id) }}>
         <MaterialIcons name='edit' size={40} />
       </CircleButton>
     </SafeAreaView>

@@ -1,11 +1,11 @@
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
-import { router, useLocalSearchParams } from 'expo-router'
+import { router } from 'expo-router'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import CircleButton from '../../components/CircleButton'
 import { useEffect, useState } from 'react'
 import { auth, db } from '../../config'
-import { collection, doc, onSnapshot, query } from 'firebase/firestore'
+import { doc, onSnapshot } from 'firebase/firestore'
 import { type tProfile } from '../types/profile'
 
 const profileEdit = (): void => {

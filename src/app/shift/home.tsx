@@ -2,10 +2,13 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-na
 import { router, useNavigation } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import List from '../../components/List'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import LogOutButton from '../../components/LogOutButton'
+import { type tProfile } from '../types/profile'
+import { auth, db } from '../../config'
+import { doc, onSnapshot } from 'firebase/firestore'
 
-const profile = (): void => {
+const authProfile = (): void => {
   router.push('user/profile')
 }
 const checkShift = (): void => {
@@ -35,18 +38,41 @@ const Home = (): JSX.Element => {
     })
   }, [])
 
+  const [profile, setProfile] = useState<tProfile | null>(null)
+  useEffect(() => {
+    if (auth.currentUser === null) { return }
+    const userId = auth.currentUser.uid
+    const ref = doc(db, 'users', userId)
+    const unsubscribe = onSnapshot(ref, (profileDoc) => {
+      if (profileDoc.exists()) {
+        const {
+          userName,
+          mailAddress,
+          password
+        } = profileDoc.data() as tProfile
+        setProfile({
+          id: userId,
+          userName,
+          mailAddress,
+          password
+        })
+      }
+    })
+    return unsubscribe
+  }, [])
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.profile}>
-          <TouchableOpacity onPress={profile}>
+          <TouchableOpacity onPress={authProfile}>
             <View style={styles.icon}>
               <Text >画</Text>
             </View>
           </TouchableOpacity>
           <View style={styles.profileText}>
-            <Text>桑門秀典 さん</Text>
-            <Text>ID: 0123</Text>
+            <Text>{profile?.userName} さん</Text>
+            <Text>{profile?.mailAddress}</Text>
           </View>
         </View>
         <List text='シフト確認' onPress={checkShift} />
