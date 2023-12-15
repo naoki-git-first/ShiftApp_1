@@ -28,7 +28,7 @@ const Profile = (): JSX.Element => {
           position
         } = profileDoc.data() as tProfile
         setProfile({
-          id: userId,
+          id: profileDoc.id,
           userName,
           mailAddress,
           password,

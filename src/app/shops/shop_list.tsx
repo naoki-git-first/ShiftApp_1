@@ -21,7 +21,7 @@ const ManageShop = (): JSX.Element => {
   const [shops, setShops] = useState<Shop[]>([])
   useEffect(() => {
     if (auth.currentUser === null) { return }
-    const ref = collection(db, `users/${auth.currentUser.uid}/shops`)
+    const ref = collection(db, 'stores')
     const q = query(ref, orderBy('updatedAt', 'desc'))
     const unsubscribe = onSnapshot(q, (snapshot) => {
       // if (snapshot.exists()) {

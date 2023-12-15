@@ -29,6 +29,9 @@ const memberList = (): void => { // メンバー管理
 const shopList = (): void => { // 店舗管理
   router.push('shops/shop_list')
 }
+const applyToJoin = (): void => { // 加入申請
+  router.push('apply_to_join')
+}
 
 const Home = (): JSX.Element => {
   const navigation = useNavigation()
@@ -63,9 +66,14 @@ const Home = (): JSX.Element => {
     return unsubscribe
   }, [])
   // 役職によって表示するコンポーネントを変更するためのするための変数
-  const admin = profile?.position === '管理者'
-  const manager = profile?.position === '店長'
-  const worker = profile?.position === 'アルバイト'
+  // const admin = profile?.position === '管理者'
+  // const manager = profile?.position === '店長'
+  // const worker = profile?.position === 'アルバイト'
+
+  // 全部表示
+  const admin = true
+  const manager = true
+  const worker = true
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -77,13 +85,14 @@ const Home = (): JSX.Element => {
             </View>
           </TouchableOpacity>
           <View style={styles.profileText}>
+            <Text>{profile?.position}</Text>
             <Text>{profile?.userName} さん</Text>
-            <Text>{profile?.mailAddress}</Text>
           </View>
         </View>
         {/* アルバイト表示 */}
         {worker && <List text='シフト確認' onPress={checkShift} />}
         {worker && <List text='シフト提出' onPress={submitShift} />}
+        {worker && <List text='店舗に参加する' onPress={applyToJoin} />}
         {/* 店長表示 */}
         {manager && <List text='シフト編集' onPress={editShift} />}
         {manager && <List text='シフト募集' onPress={wantedShift} />}

@@ -17,7 +17,7 @@ const ShopInfo = (): JSX.Element => {
   const [shop, setShop] = useState<Shop | null>(null)
   useEffect(() => {
     if (auth.currentUser === null) { return }
-    const ref = doc(db, `users/${auth.currentUser.uid}/shops`, id)
+    const ref = doc(db, 'stores', id)
     const unsubscribe = onSnapshot(ref, (shopDoc) => {
       const {
         shopName,

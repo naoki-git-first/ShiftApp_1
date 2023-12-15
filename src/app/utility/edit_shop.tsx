@@ -18,7 +18,7 @@ const handlePress = (
 ): void => {
   if (auth.currentUser === null) { return }
   const userId = auth.currentUser.uid
-  const ref = doc(db, `users/${userId}/shops`, id)
+  const ref = doc(db, 'stores', id)
   setDoc(ref, {
     shopName,
     shopManager,
@@ -46,8 +46,8 @@ const EditShop = (): JSX.Element => {
 
   useEffect(() => {
     if (auth.currentUser === null) { return }
-    const userId = auth.currentUser.uid
-    const ref = doc(db, `users/${userId}/shops`, id)
+    // const userId = auth.currentUser.uid
+    const ref = doc(db, 'stores', id)
     getDoc(ref)
       .then((docRef) => {
         const RemoteShopName = docRef?.data()?.shopName

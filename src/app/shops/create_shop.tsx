@@ -21,7 +21,7 @@ const handlePress = (
   if (auth.currentUser === null) { return }
   console.log(shopName)
 
-  const ref = collection(db, `users/${auth.currentUser.uid}/shops`)
+  const ref = collection(db, 'stores')
   console.log(shopManager)
   addDoc(ref, {
     shopName,
