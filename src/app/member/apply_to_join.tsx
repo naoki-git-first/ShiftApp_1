@@ -1,12 +1,25 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from 'react'
 import { View, Text, Button, TextInput, Alert } from 'react-native'
-import { auth, db } from '../config'
-import { getDoc, doc } from 'firebase/firestore'
-import { type tProfile } from './types/profile'
+import { auth, db } from '../../config'
+import { getDoc, doc, collection, addDoc } from 'firebase/firestore'
+import { type tProfile } from '../types/profile'
+import { router } from 'expo-router'
 
 const handleApply = (storeID: string, userID: string, userName: string): void => {
   console.log(storeID, userID)
+  const ref = collection(db, 'applies')
+  addDoc(ref, {
+    storeID,
+    userID,
+    userName
+  })
+    .then((docRef) => {
+      router.back()
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 const ApplyToJoin = (): JSX.Element => {
