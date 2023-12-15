@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert } from 'react-native'
-import { getDoc, doc, collection, addDoc } from 'firebase/firestore'
+import { getDoc, doc, collection, addDoc, Timestamp } from 'firebase/firestore'
 import { router } from 'expo-router'
 
 import { auth, db } from '../../config'
@@ -13,7 +13,8 @@ const handleApply = (storeID: string, userID: string, userName: string): void =>
   addDoc(ref, {
     storeID,
     userID,
-    userName
+    userName,
+    updatedAt: Timestamp.fromDate(new Date())
   })
     .then((docRef) => {
       router.back()
