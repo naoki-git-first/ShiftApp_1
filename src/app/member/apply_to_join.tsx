@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, TextInput, Alert } from 'react-native'
-import { auth, db } from '../../config'
+import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert } from 'react-native'
 import { getDoc, doc, collection, addDoc } from 'firebase/firestore'
-import { type tProfile } from '../types/profile'
 import { router } from 'expo-router'
+
+import { auth, db } from '../../config'
+import { type tProfile } from '../types/profile'
+import SquareButton from '../../components/SquareButton'
 
 const handleApply = (storeID: string, userID: string, userName: string): void => {
   console.log(storeID, userID)
@@ -53,17 +54,54 @@ const ApplyToJoin = (): JSX.Element => {
       })
   }, [])
   return (
-    <View>
-      <Text>店舗に参加申請する</Text>
-      <Text>{profile?.userName}</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.rowContainer}>
+        <Text style={styles.userName}>{profile?.userName}</Text>
+        <Text style={styles.text}>として店舗に参加申請する</Text>
+      </View>
       <TextInput
+        style={styles.input}
         placeholder="店舗のIDを入力してください"
         value={storeID}
         onChangeText={(text) => { setStoreID(text) }}
       />
-      <Button title="参加する" onPress={() => { handleApply(storeID, String(profile?.id), String(profile?.userName)) }} />
-    </View>
+      <SquareButton text="参加する" buttonColor='#22ddff' textColor='#ffffff'
+        onPress={() => { handleApply(storeID, String(profile?.id), String(profile?.userName)) }} />
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ffffff'
+  },
+  userName: {
+    fontSize: 20,
+    color: '#ff0000',
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  text: {
+    fontSize: 20,
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    paddingHorizontal: 12
+  },
+  input: {
+    width: 300,
+    alignSelf: 'center',
+    borderWidth: 2,
+    borderColor: '#0000ff',
+    borderRadius: 5,
+    padding: 6
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    paddingVertical: 24
+  }
+})
 
 export default ApplyToJoin
