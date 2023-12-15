@@ -5,6 +5,7 @@ import { collection, onSnapshot, query } from 'firebase/firestore'
 import { db } from '../../config'
 import { orderBy } from 'lodash'
 import { FlatList } from 'react-native-gesture-handler'
+import ApplicationList from '../../components/ApplicationList'
 
 const EditApplication = (): JSX.Element => {
   const [applications, setApplications] = useState<Application[]>([])
