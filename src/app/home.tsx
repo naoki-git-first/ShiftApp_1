@@ -30,7 +30,7 @@ const shopList = (): void => { // 店舗管理
   router.push('shops/shop_list')
 }
 const applyToJoin = (): void => { // 加入申請
-  router.push('apply_to_join')
+  router.push('member/apply_to_join')
 }
 
 const Home = (): JSX.Element => {
