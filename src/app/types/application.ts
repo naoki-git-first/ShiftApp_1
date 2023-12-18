@@ -4,7 +4,7 @@ interface Application {
   storeID: string
   userID: string
   userName: string
-  updatedAt: Timestamp
+  createdAt: Timestamp
 }
 
 export type { Application }

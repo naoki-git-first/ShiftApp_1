@@ -14,7 +14,7 @@ const handleApply = (storeID: string, userID: string, userName: string): void =>
     storeID,
     userID,
     userName,
-    updatedAt: Timestamp.fromDate(new Date())
+    createdAt: Timestamp.fromDate(new Date())
   })
     .then((docRef) => {
       router.back()

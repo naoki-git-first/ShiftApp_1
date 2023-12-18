@@ -4,6 +4,9 @@ import { router } from 'expo-router'
 const profile = (): void => {
   router.push('user/profile')
 }
+const application = (): void => {
+  router.push('application/edit')
+}
 
 const MemberList = (): JSX.Element => {
   return (
@@ -16,6 +19,9 @@ const MemberList = (): JSX.Element => {
           <Text>アルバイト</Text>
           <Text style={styles.nameText}>名前： </Text>
         </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={application}>
+        <Text>参加申請</Text>
       </TouchableOpacity>
     </SafeAreaView>
   )
