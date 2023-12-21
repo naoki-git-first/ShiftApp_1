@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert } from 'react-native'
-import { getDoc, doc, collection, addDoc, Timestamp } from 'firebase/firestore'
+import { getDoc, doc, collection, addDoc, Timestamp, where } from 'firebase/firestore'
 import { router } from 'expo-router'
 
 import { auth, db } from '../../config'
 import { type tProfile } from '../types/profile'
 import SquareButton from '../../components/SquareButton'
+import { FlatList } from 'react-native-gesture-handler'
+import { Shop } from '../types/shop'
 
 const handleApply = (storeID: string, userID: string, userName: string): void => {
   console.log(storeID, userID)
@@ -26,7 +28,9 @@ const handleApply = (storeID: string, userID: string, userName: string): void =>
 
 const ApplyToJoin = (): JSX.Element => {
   const [storeID, setStoreID] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const [profile, setProfile] = useState<tProfile | null>(null)
+
   useEffect(() => {
     if (auth.currentUser === null) { return }
     const userID = auth.currentUser.uid
@@ -54,6 +58,26 @@ const ApplyToJoin = (): JSX.Element => {
         Alert.alert('データの取得に失敗しました')
       })
   }, [])
+
+  useEffect(() => {
+    const q = doc(db, 'stores', where('storeID', '=' storeID))
+    getDoc(q)
+      .then((docRef) => {
+        if (docRef.exists()) {
+          const {
+            storeID
+          } = docRef.data() as Shop
+          setSearchResults({
+            storeID
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+        Alert.alert('店舗がありません')
+      })
+  }, [storeID])
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.rowContainer}>
@@ -65,6 +89,15 @@ const ApplyToJoin = (): JSX.Element => {
         placeholder="店舗のIDを入力してください"
         value={storeID}
         onChangeText={(text) => { setStoreID(text) }}
+      />
+       <FlatList
+        data={searchResults}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{/* 表示するデータのプロパティを指定 */}</Text>
+          </View>
+        )}
       />
       <SquareButton text="参加する" buttonColor='#22ddff' textColor='#ffffff'
         onPress={() => { handleApply(storeID, String(profile?.id), String(profile?.userName)) }} />

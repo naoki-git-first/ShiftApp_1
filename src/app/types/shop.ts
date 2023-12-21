@@ -1,7 +1,7 @@
 import { type Timestamp } from 'firebase/firestore'
 
 interface Shop {
-  id: string
+  storeID: string
   shopName: string
   shopManager: string
   address: string
