@@ -3,12 +3,41 @@ import { router } from 'expo-router'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import CircleButton from '../../components/CircleButton'
+import { useEffect, useState } from 'react'
+import { auth, db } from '../../config'
+import { doc, onSnapshot } from 'firebase/firestore'
+import { type tProfile } from '../types/profile'
 
 const profileEdit = (): void => {
   router.push('user/profile_edit')
 }
 
 const Profile = (): JSX.Element => {
+  // const id = String(useLocalSearchParams().id)
+  const [profile, setProfile] = useState<tProfile | null>(null)
+  useEffect(() => {
+    if (auth.currentUser === null) { return }
+    const userId = auth.currentUser.uid
+    const ref = doc(db, 'users', userId)
+    const unsubscribe = onSnapshot(ref, (profileDoc) => {
+      if (profileDoc.exists()) {
+        const {
+          userName,
+          mailAddress,
+          password,
+          position
+        } = profileDoc.data() as tProfile
+        setProfile({
+          id: profileDoc.id,
+          userName,
+          mailAddress,
+          password,
+          position
+        })
+      }
+    })
+    return unsubscribe
+  }, [])
   return (
     <SafeAreaView style={styles.safeArea}>
       <View>
@@ -19,20 +48,20 @@ const Profile = (): JSX.Element => {
           <Text >画</Text>
         </View>
         <View>
-          <Text style={styles.text}>名前： </Text>
+          <Text style={styles.text}>名前：{profile?.userName}</Text>
         </View>
       </View>
       <View>
-        <Text style={styles.text}>役職：</Text>
+        <Text style={styles.text}>役職：{profile?.position}</Text>
       </View>
       <View>
         <Text style={styles.text}>店舗：</Text>
       </View>
       <View>
-        <Text style={styles.text}>メールアドレス：</Text>
+        <Text style={styles.text}>メールアドレス：{profile?.mailAddress}</Text>
       </View>
       <View>
-        <Text style={styles.text}>パスワード：</Text>
+        <Text style={styles.text}>パスワード：{profile?.password}</Text>
       </View>
       <CircleButton buttonColor='#22ff22' textColor='white' onPress={profileEdit}>
         <MaterialCommunityIcons name='account-edit' size={40} />

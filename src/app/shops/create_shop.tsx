@@ -1,70 +1,52 @@
-import { View, Text, SafeAreaView, StyleSheet, Alert } from 'react-native'
-import { router, useLocalSearchParams } from 'expo-router'
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
+import { router } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
+import { collection, addDoc, Timestamp } from 'firebase/firestore'
 
 import CircleButton from '../../components/CircleButton'
+
+import { db, auth } from '../../config'
+import { useState } from 'react'
 import { TextInput } from 'react-native-gesture-handler'
-import { useEffect, useState } from 'react'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { auth, db } from '../../config'
 
 const handlePress = (
-  id: string,
   shopName: string,
   shopManager: string,
   address: string,
   businessDay: string,
   regularClosingDay: string
 ): void => {
+  console.log(address)
+
   if (auth.currentUser === null) { return }
-  const userId = auth.currentUser.uid
-  const ref = doc(db, 'stores', id)
-  setDoc(ref, {
+  console.log(shopName)
+
+  const ref = collection(db, 'stores')
+  console.log(shopManager)
+  addDoc(ref, {
     shopName,
     shopManager,
     address,
     businessDay,
-    regularClosingDay
+    regularClosingDay,
+    updatedAt: Timestamp.fromDate(new Date())
   })
     .then((docRef) => {
+      console.log('success', docRef.id)
       router.back()
     })
     .catch((error) => {
-      console.log(error)
-      Alert.alert('更新に失敗しました')
+      console.log(error, 'エラー')
     })
 }
 
-const EditShop = (): JSX.Element => {
-  const id = String(useLocalSearchParams().id)
-
+const CreateShop = (): JSX.Element => {
   const [shopName, setShopName] = useState('')
   const [shopManager, setShopManager] = useState('')
   const [address, setAddress] = useState('')
   const [businessDay, setBusinessDay] = useState('')
   const [regularClosingDay, setRegularClosingDay] = useState('')
 
-  useEffect(() => {
-    if (auth.currentUser === null) { return }
-    // const userId = auth.currentUser.uid
-    const ref = doc(db, 'stores', id)
-    getDoc(ref)
-      .then((docRef) => {
-        const RemoteShopName = docRef?.data()?.shopName
-        const RemoteShopManager = docRef?.data()?.shopManager
-        const RemoteAddress = docRef?.data()?.Address
-        const RemoteBusinessDay = docRef?.data()?.businessDay
-        const RemoteRegularClosingDay = docRef?.data()?.regularClosingDay
-        setShopName(RemoteShopName)
-        setShopManager(RemoteShopManager)
-        setAddress(RemoteAddress)
-        setBusinessDay(RemoteBusinessDay)
-        setRegularClosingDay(RemoteRegularClosingDay)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.rowContainer}>
@@ -130,7 +112,6 @@ const EditShop = (): JSX.Element => {
       <CircleButton buttonColor='#22ff22' textColor='white'
       onPress={() => {
         handlePress(
-          id,
           shopName,
           shopManager,
           address,
@@ -168,4 +149,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default EditShop
+export default CreateShop

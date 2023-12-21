@@ -10,7 +10,6 @@ const submit = (): void => {
   Alert.alert('提出！')
 }
 
-
 const WantedShift = (): JSX.Element => {
   return (
     <SafeAreaView style={styles.safeArea}>

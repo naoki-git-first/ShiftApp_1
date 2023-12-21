@@ -1,16 +1,72 @@
-import { View, Text, SafeAreaView, StyleSheet, Alert } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import CircleButton from '../../components/CircleButton'
+import { useEffect, useState } from 'react'
+import { auth, db } from '../../config'
+import { Timestamp, setDoc, doc, getDoc } from 'firebase/firestore'
+import { router } from 'expo-router'
 
-const profileEdit = (): void => {
-  Alert.alert('変更しました！')
+const profileEdit = (
+  userName: string,
+  mailAddress: string,
+  password: string,
+  position: string
+): void => {
+  if (auth.currentUser === null) { return }
+  const userId = auth.currentUser.uid
+  const ref = doc(db, 'users', userId)
+  setDoc(ref, {
+    userName,
+    mailAddress,
+    password,
+    position,
+    updatedAt: Timestamp.fromDate(new Date())
+  })
+    .then((docRef) => {
+      router.back()
+    })
+    .catch((error) => {
+      console.log(error)
+      Alert.alert('更新に失敗しました')
+    })
 }
 
 const Profile = (): JSX.Element => {
+  const [userName, setUserName] = useState('')
+  const [mailAddress, setMailAddress] = useState('')
+  const [password, setPassword] = useState('')
+  const [position, setPosition] = useState('')
+
+  const disMissKeyBoard = (): void => {
+    Keyboard.dismiss()
+  }
+
+  useEffect(() => {
+    if (auth.currentUser === null) { return }
+    const userId = auth.currentUser.uid
+    const ref = doc(db, 'users', userId)
+    getDoc(ref)
+      .then((docRef) => {
+        const RemoteUserName = docRef?.data()?.userName
+        const RemoteMailAddress = docRef?.data()?.mailAddress
+        const RemotePassword = docRef?.data()?.password
+        const RemotePosition = docRef?.data()?.position
+        setUserName(RemoteUserName)
+        setMailAddress(RemoteMailAddress)
+        setPassword(RemotePassword)
+        setPosition(RemotePosition)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <TouchableWithoutFeedback onPress={disMissKeyBoard}>
+      <SafeAreaView style={styles.safeArea}>
+
       <View>
         <Text style={styles.shopNameText}>店名</Text>
       </View>
@@ -20,27 +76,69 @@ const Profile = (): JSX.Element => {
         </View>
         <View style={styles.rowContainer}>
           <Text style={styles.baseText}>名前： </Text>
-          <TextInput style={styles.input}/>
+          <TextInput
+            style={styles.input}
+            value={userName}
+            onChangeText={(text) => { setUserName(text) }}
+            // autoCapitalize='none'
+            // keyboardType='email-address'
+            // placeholder='Email Address'
+            // textContentType='emailAddress'
+          />
         </View>
       </View>
-      <View>
+      <View style={styles.rowContainer}>
         <Text style={styles.baseText}>役職：</Text>
+        <TextInput
+          style={styles.input}
+          value={position}
+          onChangeText={(text) => { setPosition(text) }}
+          // autoCapitalize='none'
+          // keyboardType='email-address'
+          // placeholder='Email Address'
+          // textContentType='emailAddress'
+        />
       </View>
       <View>
         <Text style={styles.baseText}>店舗：</Text>
       </View>
       <View style={styles.rowContainer}>
         <Text style={styles.baseText}>メールアドレス：</Text>
-        <TextInput style={styles.input}/>
+        <TextInput
+          style={styles.input}
+          value={mailAddress}
+          onChangeText={(text) => { setMailAddress(text) }}
+          // autoCapitalize='none'
+          // keyboardType='email-address'
+          // placeholder='Email Address'
+          // textContentType='emailAddress'
+        />
       </View>
       <View style={styles.rowContainer}>
         <Text style={styles.baseText}>パスワード：</Text>
-        <TextInput style={styles.input}/>
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={(text) => { setPassword(text) }}
+          // autoCapitalize='none'
+          secureTextEntry
+          // placeholder='Email Address'
+          textContentType='password'
+        />
       </View>
-      <CircleButton buttonColor='#22ff22' textColor='white' onPress={profileEdit}>
+      <CircleButton buttonColor='#22ff22' textColor='white'
+      onPress={() => {
+        profileEdit(
+          userName,
+          mailAddress,
+          password,
+          position
+        )
+      }}>
         <MaterialIcons name='done-all' size={40} />
       </CircleButton>
-    </SafeAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   )
 }
 
