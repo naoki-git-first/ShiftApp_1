@@ -60,7 +60,7 @@ const ApplyToJoin = (): JSX.Element => {
   }, [])
 
   useEffect(() => {
-    const q = doc(db, 'stores', where('storeID', '=' storeID))
+    // const q = doc(db, 'stores', where('storeID', '=' storeID))
     getDoc(q)
       .then((docRef) => {
         if (docRef.exists()) {
