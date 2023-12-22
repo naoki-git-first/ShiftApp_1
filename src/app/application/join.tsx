@@ -35,7 +35,9 @@ const ApplyToJoin = (): JSX.Element => {
   const [shopName, setShopName] = useState('') // 店舗情報用
   const [searchResults, setSearchResults] = useState<Shop[]>([]) // 検索結果表示用
   const [profile, setProfile] = useState<tProfile | null>(null) // プロフィール用
-  const [showConfirmation, setShowConfirmation] = useState(false) // 確認ダイアログ用
+  // const [showConfirmation, setShowConfirmation] = useState(false) // 確認ダイアログ用
+  // const [selectedShopName, setSelectedShopName] = useState('') // 確認ダイアログの店舗名用
+  const [confirmationData, setConfirmationData] = useState<{ show: boolean, shopName: string }>({ show: false, shopName: '' })
 
   useEffect(() => {
     if (auth.currentUser === null) { return }
@@ -87,21 +89,21 @@ const ApplyToJoin = (): JSX.Element => {
     return unsubscribe
   }
   // 参加するボタンが押された時の処理
-  const handleSave = (): void => {
+  const handleSave = (selectedShopName: string): void => {
     // ユーザーに確認を求める
-    setShowConfirmation(true)
+    setConfirmationData({ show: true, shopName: selectedShopName })
   }
   // 確認ダイアログで承認された時
   const handleConfirmationOK = (): void => {
     // データを保存する
-    handleApply(shopName, String(profile?.id), String(profile?.userName))
+    handleApply(confirmationData.shopName, String(profile?.id), String(profile?.userName))
     // 確認ダイアログを非表示にする
-    setShowConfirmation(false)
+    setConfirmationData({ show: false, shopName: '' })
   }
   // 確認ダイアログで拒否された時
   const handleConfirmationCancel = (): void => {
     // 確認ダイアログを非表示にする
-    setShowConfirmation(false)
+    setConfirmationData({ show: false, shopName: '' })
   }
 
   return (
@@ -134,16 +136,18 @@ const ApplyToJoin = (): JSX.Element => {
               text="参加する"
               buttonColor="#22ddff"
               textColor="#ffffff"
-              onPress={
-                handleSave
+              onPress={() => {
+                handleSave(item.shopName)
+              }
               }
             />
           </View>
         )}
       />
       {/* 確認ダイアログ */}
-      {showConfirmation && (
+      {confirmationData.show && (
         <View style={styles.confirmationContainer}>
+          <Text>{confirmationData.shopName}</Text>
           <Text style={styles.confirmationText}>参加申請してもよろしいですか？</Text>
           <SquareButton
             text="OK"
