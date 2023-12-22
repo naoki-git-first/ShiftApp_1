@@ -57,6 +57,7 @@ const calendar = (): JSX.Element => {
       // useStateでカレンダーを更新
       setShifts(remoteShifts)
       setMarkedDates(newMarkedDates)
+      console.log('calendar updated')
     })
     return unsubscribe
   }, [])
