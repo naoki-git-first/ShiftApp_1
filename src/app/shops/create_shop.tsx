@@ -1,14 +1,17 @@
+// React
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
-import { router } from 'expo-router'
-import { MaterialIcons } from '@expo/vector-icons'
-import { collection, addDoc, Timestamp } from 'firebase/firestore'
-
-import CircleButton from '../../components/CircleButton'
-
-import { db, auth } from '../../config'
 import { useState } from 'react'
 import { TextInput } from 'react-native-gesture-handler'
+// EXPO
+import { router } from 'expo-router'
+import { MaterialIcons } from '@expo/vector-icons'
+// FireStore
+import { collection, addDoc, Timestamp } from 'firebase/firestore'
+import { db, auth } from '../../config'
+// 独自コンポーネント
+import CircleButton from '../../components/CircleButton'
 
+// 店舗保存処理
 const handlePress = (
   shopName: string,
   shopManager: string,
@@ -16,13 +19,9 @@ const handlePress = (
   businessDay: string,
   regularClosingDay: string
 ): void => {
-  console.log(address)
-
   if (auth.currentUser === null) { return }
-  console.log(shopName)
-
+  // storesコレクションへの参照
   const ref = collection(db, 'stores')
-  console.log(shopManager)
   addDoc(ref, {
     shopName,
     shopManager,
@@ -39,7 +38,7 @@ const handlePress = (
       console.log(error, 'エラー')
     })
 }
-
+// 管理する店舗作成
 const CreateShop = (): JSX.Element => {
   const [shopName, setShopName] = useState('')
   const [shopManager, setShopManager] = useState('')
@@ -109,6 +108,7 @@ const CreateShop = (): JSX.Element => {
             // textContentType='emailAddress'
           />
       </View>
+      {/* 店舗作成ボタン */}
       <CircleButton buttonColor='#22ff22' textColor='white'
       onPress={() => {
         handlePress(

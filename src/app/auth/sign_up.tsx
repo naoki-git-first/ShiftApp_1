@@ -1,18 +1,17 @@
-import {
-  View, Text, TextInput, Alert,
-  TouchableOpacity, StyleSheet
-} from 'react-native'
-
-import { Link, router } from 'expo-router'
+// React
+import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native'
 import { useState } from 'react'
-import SquareButton from '../../components/SquareButton'
+// EXPO
+import { Link, router } from 'expo-router'
+// FireStore
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+// 独自コンポーネント
+import SquareButton from '../../components/SquareButton'
 
 import { auth } from '../../config'
-
+// 新規会員登録処理
 const handlePress = (email: string, password: string): void => {
-  // 会員登録
-  console.log(email, password)
+  // FireStoreのFunctionで登録処理
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log(userCredential.user.uid)
@@ -25,6 +24,7 @@ const handlePress = (email: string, password: string): void => {
     })
 }
 
+// 会員登録
 const SignUp = (): JSX.Element => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -47,7 +47,7 @@ const SignUp = (): JSX.Element => {
           onChangeText={(text) => { setPassword(text) }}
           autoCapitalize='none'
           secureTextEntry
-          placeholder='Passeord'
+          placeholder='Password'
           textContentType='password'
         />
         <SquareButton text='サインイン' textColor='white' buttonColor='blue' onPress={() => { handlePress(email, password) }} />

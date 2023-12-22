@@ -1,39 +1,48 @@
+// React
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert } from 'react-native'
-import { getDoc, doc, collection, addDoc, Timestamp, where } from 'firebase/firestore'
-import { router } from 'expo-router'
-
-import { auth, db } from '../../config'
-import { type tProfile } from '../types/profile'
-import SquareButton from '../../components/SquareButton'
 import { FlatList } from 'react-native-gesture-handler'
-import { Shop } from '../types/shop'
+// EXPO
+import { router } from 'expo-router'
+// FireStore
+import { getDoc, doc, collection, addDoc, Timestamp, where, query, onSnapshot } from 'firebase/firestore'
+import { auth, db } from '../../config'
+// 独自コンポーネント
+import SquareButton from '../../components/SquareButton'
+import { type tProfile } from '../types/profile'
+import { type Shop } from '../types/shop'
 
-const handleApply = (storeID: string, userID: string, userName: string): void => {
-  console.log(storeID, userID)
+// appliesコレクションに参加申請を保存する
+const handleApply = (storeName: string, userID: string, userName: string): void => {
+  console.log(storeName, userID)
   const ref = collection(db, 'applies')
   addDoc(ref, {
-    storeID,
+    storeName,
     userID,
     userName,
     createdAt: Timestamp.fromDate(new Date())
   })
     .then((docRef) => {
+      console.log('success', docRef.id)
       router.back()
     })
     .catch((error) => {
       console.log(error)
     })
 }
-
+// 店舗へ参加申請をする
 const ApplyToJoin = (): JSX.Element => {
-  const [storeID, setStoreID] = useState('')
-  const [searchResults, setSearchResults] = useState([])
-  const [profile, setProfile] = useState<tProfile | null>(null)
+  const [shopName, setShopName] = useState('') // 店舗情報用
+  const [searchResults, setSearchResults] = useState<Shop[]>([]) // 検索結果表示用
+  const [profile, setProfile] = useState<tProfile | null>(null) // プロフィール用
+  // const [showConfirmation, setShowConfirmation] = useState(false) // 確認ダイアログ用
+  // const [selectedShopName, setSelectedShopName] = useState('') // 確認ダイアログの店舗名用
+  const [confirmationData, setConfirmationData] = useState<{ show: boolean, shopName: string }>({ show: false, shopName: '' })
 
   useEffect(() => {
     if (auth.currentUser === null) { return }
     const userID = auth.currentUser.uid
+    // CurrentUserのドキュメントへの参照
     const ref = doc(db, 'users', userID)
     getDoc(ref)
       .then((docRef) => {
@@ -59,24 +68,44 @@ const ApplyToJoin = (): JSX.Element => {
       })
   }, [])
 
-  useEffect(() => {
-    // const q = doc(db, 'stores', where('storeID', '=' storeID))
-    getDoc(q)
-      .then((docRef) => {
-        if (docRef.exists()) {
-          const {
-            storeID
-          } = docRef.data() as Shop
-          setSearchResults({
-            storeID
-          })
-        }
+  // 店舗名検索
+  const handleSearch = (): any => {
+    const ref = collection(db, 'stores')
+    const q = query(ref, where('shopName', '>=', shopName), where('shopName', '<=', shopName + '\uf8ff'))
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const remoteShops: Shop[] = []
+      snapshot.forEach((doc) => {
+        const { shopName, shopManager, address, businessDay, regularClosingDay, updatedAt } = doc.data()
+        remoteShops.push({
+          shopName,
+          shopManager,
+          address,
+          businessDay,
+          regularClosingDay,
+          updatedAt
+        })
       })
-      .catch((error) => {
-        console.log(error)
-        Alert.alert('店舗がありません')
-      })
-  }, [storeID])
+      setSearchResults(remoteShops)
+    })
+    return unsubscribe
+  }
+  // 参加するボタンが押された時の処理
+  const handleSave = (selectedShopName: string): void => {
+    // ユーザーに確認を求める
+    setConfirmationData({ show: true, shopName: selectedShopName })
+  }
+  // 確認ダイアログで承認された時
+  const handleConfirmationOK = (): void => {
+    // データを保存する
+    handleApply(confirmationData.shopName, String(profile?.id), String(profile?.userName))
+    // 確認ダイアログを非表示にする
+    setConfirmationData({ show: false, shopName: '' })
+  }
+  // 確認ダイアログで拒否された時
+  const handleConfirmationCancel = (): void => {
+    // 確認ダイアログを非表示にする
+    setConfirmationData({ show: false, shopName: '' })
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -86,21 +115,56 @@ const ApplyToJoin = (): JSX.Element => {
       </View>
       <TextInput
         style={styles.input}
-        placeholder="店舗のIDを入力してください"
-        value={storeID}
-        onChangeText={(text) => { setStoreID(text) }}
+        placeholder="店舗名を入力してください"
+        value={shopName}
+        onChangeText={(text) => { setShopName(text) }}
+      />
+      <SquareButton
+        text="検索する"
+        buttonColor="#22ddff"
+        textColor="#ffffff"
+        onPress={() => {
+          handleSearch()
+        }}
       />
        <FlatList
         data={searchResults}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View>
-            <Text>{/* 表示するデータのプロパティを指定 */}</Text>
+            <Text>{item.shopName}</Text>
+            <SquareButton
+              text="参加する"
+              buttonColor="#22ddff"
+              textColor="#ffffff"
+              onPress={() => {
+                handleSave(item.shopName)
+              }
+              }
+            />
           </View>
         )}
       />
-      <SquareButton text="参加する" buttonColor='#22ddff' textColor='#ffffff'
-        onPress={() => { handleApply(storeID, String(profile?.id), String(profile?.userName)) }} />
+      {/* 確認ダイアログ */}
+      {confirmationData.show && (
+        <View style={styles.confirmationContainer}>
+          <Text>{confirmationData.shopName}</Text>
+          <Text style={styles.confirmationText}>参加申請してもよろしいですか？</Text>
+          <SquareButton
+            text="OK"
+            buttonColor="#22ddff"
+            textColor="#ffffff"
+            onPress={handleConfirmationOK}
+          />
+          <SquareButton
+            text="キャンセル"
+            buttonColor="#ff0000"
+            textColor="#ffffff"
+            onPress={handleConfirmationCancel}
+          />
+        </View>
+      )}
+
     </SafeAreaView>
   )
 }
@@ -135,6 +199,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     paddingVertical: 24
+  },
+  confirmationContainer: {
+    position: 'absolute',
+    top: '40%',
+    left: '20%',
+    width: '60%',
+    backgroundColor: '#ffffff',
+    padding: 16,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#0000ff'
+  },
+  confirmationText: {
+    fontSize: 18,
+    marginBottom: 16
   }
 })
 
