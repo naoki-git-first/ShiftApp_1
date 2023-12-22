@@ -1,13 +1,17 @@
+// React
 import { View, Text, SafeAreaView, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
-import { MaterialIcons } from '@expo/vector-icons'
-
-import CircleButton from '../../components/CircleButton'
 import { useEffect, useState } from 'react'
-import { auth, db } from '../../config'
-import { Timestamp, setDoc, doc, getDoc } from 'firebase/firestore'
+// EXPO
+import { MaterialIcons } from '@expo/vector-icons'
 import { router } from 'expo-router'
+// FireStore
+import { Timestamp, setDoc, doc, getDoc } from 'firebase/firestore'
+import { auth, db } from '../../config'
+// 独自コンポーネント
+import CircleButton from '../../components/CircleButton'
 
+// プロフィールの変更保存処理
 const profileEdit = (
   userName: string,
   mailAddress: string,
@@ -16,6 +20,7 @@ const profileEdit = (
 ): void => {
   if (auth.currentUser === null) { return }
   const userId = auth.currentUser.uid
+  // CurrentUserのドキュメント参照
   const ref = doc(db, 'users', userId)
   setDoc(ref, {
     userName,
@@ -32,7 +37,7 @@ const profileEdit = (
       Alert.alert('更新に失敗しました')
     })
 }
-
+// プロフィール編集
 const Profile = (): JSX.Element => {
   const [userName, setUserName] = useState('')
   const [mailAddress, setMailAddress] = useState('')
@@ -126,6 +131,7 @@ const Profile = (): JSX.Element => {
           textContentType='password'
         />
       </View>
+      {/* 編集ボタン */}
       <CircleButton buttonColor='#22ff22' textColor='white'
       onPress={() => {
         profileEdit(

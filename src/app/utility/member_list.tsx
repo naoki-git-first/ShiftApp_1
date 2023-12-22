@@ -21,7 +21,7 @@ const MemberList = (): JSX.Element => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={application}>
-        <Text style={styles.nameText}>参加申請</Text>
+        <Text style={styles.hoge}>承認待ち</Text>
       </TouchableOpacity>
     </SafeAreaView>
   )
@@ -51,6 +51,11 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: 20
+  },
+  hoge: {
+    fontSize: 20,
+    alignSelf: 'center',
+    paddingVertical: 20
   }
 })
 

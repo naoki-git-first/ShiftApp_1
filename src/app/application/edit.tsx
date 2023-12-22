@@ -1,11 +1,14 @@
+// React
 import { useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, Text } from 'react-native'
-import { type Application } from '../types/application'
+import { FlatList } from 'react-native-gesture-handler'
+// FireStore
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
 import { db } from '../../config'
-import { FlatList } from 'react-native-gesture-handler'
+// 独自コンポーネント
 import ApplicationList from '../../components/ApplicationList'
-
+import { type Application } from '../types/application'
+// 承認チェック
 const EditApplication = (): JSX.Element => {
   const [applications, setApplications] = useState<Application[]>([])
   useEffect(() => {
@@ -30,7 +33,7 @@ const EditApplication = (): JSX.Element => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Text>承認するかどうか</Text>
+      <Text style={styles.hoge}>承認待ち</Text>
       <FlatList
         data={applications}
         renderItem={({ item }) => <ApplicationList application={item} />}
@@ -43,6 +46,10 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#ffffff'
+  },
+  hoge: {
+    fontSize: 20,
+    alignSelf: 'center'
   }
 })
 

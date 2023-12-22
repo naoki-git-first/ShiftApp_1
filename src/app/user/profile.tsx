@@ -1,23 +1,28 @@
+// React
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
+import { useEffect, useState } from 'react'
+// EXPO
 import { router } from 'expo-router'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-
-import CircleButton from '../../components/CircleButton'
-import { useEffect, useState } from 'react'
-import { auth, db } from '../../config'
+// FireStore
 import { doc, onSnapshot } from 'firebase/firestore'
+import { auth, db } from '../../config'
+// 独自コンポーネント
+import CircleButton from '../../components/CircleButton'
 import { type tProfile } from '../types/profile'
 
+// プロフィール画面へ遷移
 const profileEdit = (): void => {
   router.push('user/profile_edit')
 }
-
+// プロフィール
 const Profile = (): JSX.Element => {
   // const id = String(useLocalSearchParams().id)
   const [profile, setProfile] = useState<tProfile | null>(null)
   useEffect(() => {
     if (auth.currentUser === null) { return }
     const userId = auth.currentUser.uid
+    // CurrentUserのドキュメント参照
     const ref = doc(db, 'users', userId)
     const unsubscribe = onSnapshot(ref, (profileDoc) => {
       if (profileDoc.exists()) {
@@ -38,6 +43,7 @@ const Profile = (): JSX.Element => {
     })
     return unsubscribe
   }, [])
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View>

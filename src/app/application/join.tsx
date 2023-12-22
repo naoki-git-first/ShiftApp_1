@@ -1,14 +1,18 @@
+// React
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert } from 'react-native'
-import { getDoc, doc, collection, addDoc, Timestamp, where, query, onSnapshot } from 'firebase/firestore'
-import { router } from 'expo-router'
-
-import { auth, db } from '../../config'
-import { type tProfile } from '../types/profile'
-import SquareButton from '../../components/SquareButton'
 import { FlatList } from 'react-native-gesture-handler'
+// EXPO
+import { router } from 'expo-router'
+// FireStore
+import { getDoc, doc, collection, addDoc, Timestamp, where, query, onSnapshot } from 'firebase/firestore'
+import { auth, db } from '../../config'
+// 独自コンポーネント
+import SquareButton from '../../components/SquareButton'
+import { type tProfile } from '../types/profile'
 import { type Shop } from '../types/shop'
 
+// appliesコレクションに参加申請を保存する
 const handleApply = (storeName: string, userID: string, userName: string): void => {
   console.log(storeName, userID)
   const ref = collection(db, 'applies')
@@ -26,17 +30,17 @@ const handleApply = (storeName: string, userID: string, userName: string): void 
       console.log(error)
     })
 }
-
+// 店舗へ参加申請をする
 const ApplyToJoin = (): JSX.Element => {
-  const [shopName, setShopName] = useState('')
-  const [searchResults, setSearchResults] = useState<Shop[]>([])
-  const [profile, setProfile] = useState<tProfile | null>(null)
-
-  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [shopName, setShopName] = useState('') // 店舗情報用
+  const [searchResults, setSearchResults] = useState<Shop[]>([]) // 検索結果表示用
+  const [profile, setProfile] = useState<tProfile | null>(null) // プロフィール用
+  const [showConfirmation, setShowConfirmation] = useState(false) // 確認ダイアログ用
 
   useEffect(() => {
     if (auth.currentUser === null) { return }
     const userID = auth.currentUser.uid
+    // CurrentUserのドキュメントへの参照
     const ref = doc(db, 'users', userID)
     getDoc(ref)
       .then((docRef) => {
@@ -61,7 +65,7 @@ const ApplyToJoin = (): JSX.Element => {
         Alert.alert('データの取得に失敗しました')
       })
   }, [])
-
+  // 店舗名検索
   const handleSearch = (): any => {
     const ref = collection(db, 'stores')
     const q = query(ref, where('shopName', '>=', shopName), where('shopName', '<=', shopName + '\uf8ff'))
@@ -137,9 +141,10 @@ const ApplyToJoin = (): JSX.Element => {
           </View>
         )}
       />
+      {/* 確認ダイアログ */}
       {showConfirmation && (
         <View style={styles.confirmationContainer}>
-          <Text style={styles.confirmationText}>保存してもよろしいですか？</Text>
+          <Text style={styles.confirmationText}>参加申請してもよろしいですか？</Text>
           <SquareButton
             text="OK"
             buttonColor="#22ddff"

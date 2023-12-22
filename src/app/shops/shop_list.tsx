@@ -1,27 +1,34 @@
-import { router } from 'expo-router'
+// React
 import { SafeAreaView, StyleSheet } from 'react-native'
-import { Feather } from '@expo/vector-icons'
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
+import { FlatList } from 'react-native-gesture-handler'
 import { useEffect, useState } from 'react'
-
+// EXPO
+import { router } from 'expo-router'
+import { Feather } from '@expo/vector-icons'
+// FireStore
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
+import { db, auth } from '../../config'
+// 独自コンポーネント
 import CircleButton from '../../components/CircleButton'
 import ShopList from '../../components/ShopList'
-import { db, auth } from '../../config'
 import { type Shop } from '../types/shop'
-import { FlatList } from 'react-native-gesture-handler'
 
 // const handlePress = (): void => {
 //   router.push('utility/shop_info')
 // }
+// 管理店舗作成画面へ
 const create = (): void => {
   router.push('shops/create_shop')
 }
 
+// 管理店舗のリスト
 const ManageShop = (): JSX.Element => {
   const [shops, setShops] = useState<Shop[]>([])
   useEffect(() => {
     if (auth.currentUser === null) { return }
+    // storesコレクションへの参照
     const ref = collection(db, 'stores')
+    // 降順でクエリを発行
     const q = query(ref, orderBy('updatedAt', 'desc'))
     const unsubscribe = onSnapshot(q, (snapshot) => {
       // if (snapshot.exists()) {
