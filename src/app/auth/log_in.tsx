@@ -46,7 +46,7 @@ const LogIn = (): JSX.Element => {
           onChangeText={(text) => { setPassword(text) }}
           autoCapitalize='none'
           secureTextEntry
-          placeholder='Passeord'
+          placeholder='Password'
           textContentType='password'
         />
         <SquareButton text='ログイン' textColor='white' buttonColor='blue' onPress={() => { handlePress(email, password) }}/>

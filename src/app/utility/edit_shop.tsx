@@ -17,7 +17,6 @@ const handlePress = (
   regularClosingDay: string
 ): void => {
   if (auth.currentUser === null) { return }
-  const userId = auth.currentUser.uid
   const ref = doc(db, 'stores', id)
   setDoc(ref, {
     shopName,
