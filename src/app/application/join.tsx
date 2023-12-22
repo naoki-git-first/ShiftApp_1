@@ -67,6 +67,7 @@ const ApplyToJoin = (): JSX.Element => {
         Alert.alert('データの取得に失敗しました')
       })
   }, [])
+
   // 店舗名検索
   const handleSearch = (): any => {
     const ref = collection(db, 'stores')

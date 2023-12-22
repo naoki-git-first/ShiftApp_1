@@ -9,7 +9,7 @@ import {
   CalendarUtils
 } from 'react-native-calendars'
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
-import { db } from '../../config'
+import { db, auth } from '../../config'
 
 const getColorByStore = (store: string): string => {
   switch (store) {
@@ -24,51 +24,26 @@ const getColorByStore = (store: string): string => {
 }
 
 const calendar = (): JSX.Element => {
-  // // 各日付に対して複数のドットを指定
-  // const MyShifts = {
-  //   '2023-12-15': {
-  //     dots: [
-  //       { key: '1', color: 'red' }
-  //     ]
-  //   },
-  //   '2023-12-20': {
-  //     dots: [
-  //       { key: '3', color: '#00ff00' },
-  //       { key: '4', color: 'rgb(0, 0, 255)' }
-  //     ]
-  //   }
-  // }
-
-  // // 仮のイベントデータ
-  // const EVENTS: TimelineEventProps[] = [
-  //   { id: '1', start: '2023-12-15T09:00:00', end: '2023-12-15T10:30:00', title: '♡みく♡', color: '#ff69b4' },
-  //   { id: '1', start: '2023-11-24T09:00:00', end: '2023-11-24T10:30:00', title: 'Meeting 1', color: 'red' },
-  //   { id: '1', start: '2023-11-24T09:00:00', end: '2023-11-24T10:30:00', title: 'Meeting 1', color: 'green' },
-  //   { id: '1', start: '2023-11-24T09:00:00', end: '2023-11-24T10:30:00', title: 'Meeting 1', color: 'purple' },
-  //   { id: '2', start: '2023-11-23T11:00:00', end: '2023-11-23T12:30:00', title: 'Meeting 2', color: 'green' }
-  // ]
-
-  // // 日付ごとにグループ化(date : EVENTS[]の形)
-  // const eventsByDate = groupBy(EVENTS, e => CalendarUtils.getCalendarDateString(e.start)) as Record<string, TimelineEventProps[]>
-
   const [shifts, setShifts] = useState<TimelineEventProps[]>([])
-  const myShifts: Array<{ date: string }> = []
-  const addDots: { [key: string]: { dots: Array<{ key: string; color: string }> } } = {}
+  // const myShifts: string[] = []
+  const [markedDates, setMarkedDates] = useState<{ [key: string]: { dots: Array<{ color: string }> } }>({})
   useEffect(() => {
     const ref = collection(db, 'shifts')
     const q = query(ref, orderBy('start', 'asc'))
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const remoteShifts: TimelineEventProps[] = []
+      const newMarkedDates: { [key: string]: { dots: Array<{ color: string }> } } = {}
       snapshot.forEach((doc) => {
         // firebaseからデータを取得
         const { start, end, userID, userName, store } = doc.data()
         // カラーコードを取得する
         const color = getColorByStore(store)
         // ログイン中のユーザがシフトに入っている日付の取得
-        const uid = 'AeZaAzRMxKgwUfDM9x8Yqo7UlI23'
-        // auth.currentUser?.uid
-        if (uid === userID) {
-          myShifts.push(start.toDate().toISOString().split('T')[0])
+        if (auth.currentUser?.uid === userID) {
+          const date = start.toDate().toISOString().split('T')[0]
+          newMarkedDates[date] = {
+            dots: [{ color: 'red' }]
+          }
         }
         // TimelineEventProps[]型でデータを格納
         remoteShifts.push({
@@ -79,8 +54,9 @@ const calendar = (): JSX.Element => {
           end: end.toDate().toISOString()
         })
       })
-      // useStateでshiftを更新
+      // useStateでカレンダーを更新
       setShifts(remoteShifts)
+      setMarkedDates(newMarkedDates)
     })
     return unsubscribe
   }, [])
@@ -94,7 +70,7 @@ const calendar = (): JSX.Element => {
       >
         <ExpandableCalendar // ExpandableCalendarの表示
         markingType={'multi-dot'}
-        markedDates={addDots}
+        markedDates={markedDates}
         />
         <TimelineList // TimelineListの表示
           events={eventsByDate} // イベントリストを格納(date : EVENTS[]の形)
