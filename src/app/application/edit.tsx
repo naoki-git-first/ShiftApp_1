@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet, Text } from 'react-native'
 import { type Application } from '../types/application'
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
 import { db } from '../../config'
@@ -30,6 +30,7 @@ const EditApplication = (): JSX.Element => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <Text>承認するかどうか</Text>
       <FlatList
         data={applications}
         renderItem={({ item }) => <ApplicationList application={item} />}

@@ -21,7 +21,7 @@ const MemberList = (): JSX.Element => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={application}>
-        <Text>参加申請</Text>
+        <Text style={styles.nameText}>参加申請</Text>
       </TouchableOpacity>
     </SafeAreaView>
   )
