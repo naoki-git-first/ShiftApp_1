@@ -11,7 +11,7 @@ import { db, auth } from '../../config'
 // 独自コンポーネント
 import CircleButton from '../../components/CircleButton'
 
-// 管理する店舗作成
+// 募集するシフトを作成する
 const CreateAskShift = (): JSX.Element => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -21,6 +21,7 @@ const CreateAskShift = (): JSX.Element => {
     const dateObject = new Date(date)
     return Timestamp.fromDate(dateObject)
   }
+
   // 指定された期間の配列を生成
   const generateDateArray = (start: Date, end: Date): string[] => {
     const dateArray: string[] = [] // 格納用のからの配列
@@ -36,20 +37,20 @@ const CreateAskShift = (): JSX.Element => {
   }
 
   // 募集シフトを保存
-  const handlePress = (
-
-  ): void => {
+  const handlePress = (): void => {
     if (auth.currentUser === null) { return }
-
+    // 差分計算のためDate型に変換
     const start = new Date(startDate)
     const end = new Date(endDate)
-
+    // 定義した関数で期間の配列作成
     const dateArray = generateDateArray(start, end)
     // pre-shiftsコレクションへの参照
     const ref = collection(db, 'pre-shifts')
     addDoc(ref, {
       startDate: convertToTimestamp(startDate),
       endDate: convertToTimestamp(endDate),
+      // map()でdateArrayの各要素dateに対してkeyがdate,valueが[]を持つ配列を生成
+      // Object.fromEntries()で[key,value]形式の配列を元に新しいオブジェクトを生成
       submitted: Object.fromEntries(dateArray.map((date) => [date, []]))
     })
       .then((docRef) => {
