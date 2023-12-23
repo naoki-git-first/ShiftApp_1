@@ -21,7 +21,7 @@ const editShift = (): void => { // シフト編集
   router.push('utility/shift_shop_list')
 }
 const wantedShift = (): void => { // シフト募集
-  router.push('utility/wanted_shift')
+  router.push('shift/create_ask_shift')
 }
 const memberList = (): void => { // メンバー管理
   router.push('utility/member_shop_list')
@@ -70,7 +70,7 @@ const Home = (): JSX.Element => {
   // const manager = profile?.position === '店長'
   // const worker = profile?.position === 'アルバイト'
 
-  // 全部表示
+  // // 全部表示
   const admin = true
   const manager = true
   const worker = true
