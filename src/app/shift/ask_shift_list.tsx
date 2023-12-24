@@ -7,6 +7,7 @@ import { type Pre } from '../types/pre-shift'
 import { auth, db } from '../../config'
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
 import { FlatList } from 'react-native-gesture-handler'
+import AskShiftList from '../../components/AskShiftList'
 
 const askShift = (): JSX.Element => {
   const [pres, setPres] = useState<Pre>()
@@ -45,7 +46,7 @@ const askShift = (): JSX.Element => {
       <SafeAreaView style={styles.safeArea}>
         <FlatList
           data={submittedDates}
-          renderItem={({ item }) => {item}}
+          renderItem={({ item }) => <AskShiftList pre={item} />}
           />
       </SafeAreaView>
   // </TouchableWithoutFeedback>
