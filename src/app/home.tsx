@@ -15,7 +15,7 @@ const checkShift = (): void => { // シフト確認
   router.push('shift/calendar')
 }
 const submitShift = (): void => { // シフト提出
-  router.push('shift/submit')
+  router.push('shift/ask_shift_list')
 }
 const editShift = (): void => { // シフト編集
   router.push('utility/shift_shop_list')

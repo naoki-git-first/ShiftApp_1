@@ -6,10 +6,11 @@ import { TextInput } from 'react-native-gesture-handler'
 import { router } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
 // FireStore
-import { collection, addDoc, Timestamp } from 'firebase/firestore'
+import { collection, addDoc } from 'firebase/firestore'
 import { db, auth } from '../../config'
 // 独自コンポーネント
 import CircleButton from '../../components/CircleButton'
+import { type inArrayMap } from '../types/in-array-map'
 
 // 募集するシフトを作成する
 const CreateAskShift = (): JSX.Element => {
@@ -17,15 +18,15 @@ const CreateAskShift = (): JSX.Element => {
   const [endDate, setEndDate] = useState('')
 
   // Timestamp型に変換する
-  const convertToTimestamp = (date: string): Timestamp => {
-    const dateObject = new Date(date)
-    return Timestamp.fromDate(dateObject)
-  }
+  // const convertToTimestamp = (date: string): Timestamp => {
+  //   const dateObject = new Date(date)
+  //   return Timestamp.fromDate(dateObject)
+  // }
 
   // 指定された期間の配列を生成
   const generateDateArray = (start: Date, end: Date): string[] => {
     const dateArray: string[] = [] // 格納用のからの配列
-    const currentDate = new Date(start) // 例:'2023-12-1T12:00:00.000Z'
+    const currentDate = new Date(start) // Date型 例:'2023-12-1T12:00:00.000Z'
     // 期間分回す
     while (currentDate <= end) {
       // Date型のcurrentDateを'2023-12-1'のString型に整型
@@ -44,14 +45,16 @@ const CreateAskShift = (): JSX.Element => {
     const end = new Date(endDate)
     // 定義した関数で期間の配列作成
     const dateArray = generateDateArray(start, end)
+    // map()でdateArrayの各要素dateに対してkeyがdate,valueがmap型の配列を生成
+    // Object.fromEntries()で[key,value]形式の配列を元に新しいオブジェクト(map)を生成
+    // const submitted: { [key: string]: inArrayMap} = Object.fromEntries(dateArray.map((date) => [date, {} as inArrayMap]))
+    const submitted = Object.fromEntries(dateArray.map((date) => [date, []]))
     // pre-shiftsコレクションへの参照
     const ref = collection(db, 'pre-shifts')
     addDoc(ref, {
-      startDate: convertToTimestamp(startDate),
-      endDate: convertToTimestamp(endDate),
-      // map()でdateArrayの各要素dateに対してkeyがdate,valueが[]を持つ配列を生成
-      // Object.fromEntries()で[key,value]形式の配列を元に新しいオブジェクトを生成
-      submitted: Object.fromEntries(dateArray.map((date) => [date, []]))
+      startDate,
+      endDate,
+      submitted
     })
       .then((docRef) => {
         console.log('success', docRef.id)

@@ -1,74 +1,90 @@
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Keyboard } from 'react-native'
 
-import SquareButton from '../../components/SquareButton'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+// import SquareButton from '../../components/SquareButton'
+// import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { useEffect, useState } from 'react'
+import { type Pre } from '../types/pre-shift'
+import { auth, db } from '../../config'
+import { doc, onSnapshot } from 'firebase/firestore'
 
-const temp = (): void => {
-  Alert.alert('一時保存！')
-}
+// const temp = (): void => {
+//   Alert.alert('一時保存！')
+// }
 
-const submit = (): void => {
-  Alert.alert('提出！')
-}
+// const submit = (): void => {
+//   Alert.alert('提出！')
+// }
 
-const disMissKeyBoard = (): void => {
-  Keyboard.dismiss()
-}
+// const disMissKeyBoard = (): void => {
+//   Keyboard.dismiss()
+// }
 
 const SubmitForm = (): JSX.Element => {
+  const [pres, setPres] = useState<Pre>()
+  const [submittedLists, setSubmittedLists] = useState<string[]>([])
+  const [submittedDates, setSubmittedDates] = useState<string[]>([])
+
+  useEffect(() => {
+    if (auth.currentUser === null) { return }
+    // pre-shiftコレクションへの参照
+    const remoteSubmittedLists: string[] = []
+    const documentid = 'Lky2ri2fCHrLF675dBIN'
+    const ref = doc(db, 'pre-shifts', documentid)
+    const unsubscribe = onSnapshot(ref, (preDoc) => {
+      if (preDoc.exists()) {
+        const {
+          startDate,
+          endDate,
+          submitted
+        } = preDoc.data() as Pre
+        setPres({
+          startDate,
+          endDate,
+          submitted
+        })
+                // // submittedの中身を配列に変換
+                // const submittedArray = Object.entries(submitted).map(([date, inArrayMap]) => {
+                //   return `Date: ${date}, Data: ${JSON.stringify(inArrayMap)}`;
+                // })
+        // setSubmittedLists(submittedArray)
+        const dates = Object.keys(submitted).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+        setSubmittedDates(dates);
+      }
+    })
+    return unsubscribe
+  }, [])
+
   return (
-    // <TouchableWithoutFeedback onPress={disMissKeyBoard} style={styles.disMiss}>
+  // <TouchableWithoutFeedback onPress={disMissKeyBoard} style={styles.disMiss}>
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
-          <View style={styles.listContainer}>
-            <Text style={styles.listInnerText}>1/1</Text>
-            <TextInput
-              style={styles.inputTime}
-              value={hour}
-              onChangeText={(text) => { setHour(text) }}
-              // autoCapitalize='none'
-              // keyboardType='email-address'
-              // placeholder='Email Address'
-              // textContentType='emailAddress'
-            />
-            <Text style={styles.listInnerText}>:</Text>
-            <TextInput
-              style={styles.inputTime}
-              value={hour}
-              onChangeText={(text) => { setHour(text) }}
-              // autoCapitalize='none'
-              // keyboardType='email-address'
-              // placeholder='Email Address'
-              // textContentType='emailAddress'
-            />
-            <Text style={styles.listInnerText}>~</Text>
-            <TextInput
-              style={styles.inputTime}
-              value={hour}
-              onChangeText={(text) => { setHour(text) }}
-              // autoCapitalize='none'
-              // keyboardType='email-address'
-              // placeholder='Email Address'
-              // textContentType='emailAddress'
-            />
-            <Text style={styles.listInnerText}>:</Text>
-            <TextInput
-              style={styles.inputTime}
-              value={hour}
-              onChangeText={(text) => { setHour(text) }}
-              // autoCapitalize='none'
-              // keyboardType='email-address'
-              // placeholder='Email Address'
-              // textContentType='emailAddress'
-            />
-          </View>
-          <View style={styles.rowContainer}>
-            <SquareButton text='一時保存' buttonColor='#2299ff' textColor='white' onPress={temp} />
-            <SquareButton text='提出' buttonColor='#ff2299' textColor='white' onPress={submit} />
-          </View>
+        <Text>{pres?.startDate}〜{pres?.endDate}</Text>
+        {/* {submittedLists.map((item.submitted: any) => (
+          <Text key={item.submitted}>{item.submitted}</Text>
+        ))} */}
+        {/* <View>
+  {Object.entries(pres?.submitted).map(([date, inArrayMap]) => (
+    <View key={date}>
+      <Text>Date: {date}</Text>
+      {Object.entries(inArrayMap).map(([key, value]) => (
+        <Text key={key}>{key}: {value}</Text>
+      ))}
+    </View>
+  ))}
+</View> */}
+    {/* submitted のキーを表示 */}
+    {/* {pres && Object.keys(pres.submitted).map((date) => (
+      <Text key={date}>{date}</Text>
+    ))} */}
+      {submittedDates.map((date) => (
+        <View key={date}>
+          <Text>Date: {date}</Text>
+          {Object.entries(pres?.submitted[date]).map(([key, value]) => (
+            <Text key={key}>{key}: {value}</Text>
+          ))}
         </View>
+      ))}
       </SafeAreaView>
-    // </TouchableWithoutFeedback>
+  // </TouchableWithoutFeedback>
   )
 }
 

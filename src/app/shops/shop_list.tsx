@@ -13,9 +13,6 @@ import CircleButton from '../../components/CircleButton'
 import ShopList from '../../components/ShopList'
 import { type Shop } from '../types/shop'
 
-// const handlePress = (): void => {
-//   router.push('utility/shop_info')
-// }
 // 管理店舗作成画面へ
 const create = (): void => {
   router.push('shops/create_shop')
