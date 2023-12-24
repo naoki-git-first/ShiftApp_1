@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Keyboard } from 'react-native'
+import { SafeAreaView, StyleSheet } from 'react-native'
 
 // import SquareButton from '../../components/SquareButton'
 // import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
@@ -10,12 +10,10 @@ import { FlatList } from 'react-native-gesture-handler'
 import AskShiftList from '../../components/AskShiftList'
 
 const askShift = (): JSX.Element => {
-  const [pres, setPres] = useState<Pre>()
   const [submittedDates, setSubmittedDates] = useState<Pre[]>([])
 
   useEffect(() => {
     if (auth.currentUser === null) { return }
-    // const documentid = 'Lky2ri2fCHrLF675dBIN'
     // pre-shiftコレクションへの参照
     const ref = collection(db, 'pre-shifts')
     // 昇順でクエリを発行
@@ -30,6 +28,7 @@ const askShift = (): JSX.Element => {
             submitted
           } = preDoc.data() as Pre
           remoteAskShiftLists.push({
+            id: preDoc.id,
             startDate,
             endDate,
             submitted

@@ -14,7 +14,7 @@ const AskShiftList = (props: Props): JSX.Element | null => {
   if (startDate === null || endDate === null) { return null }
   return (
     <Link
-    href={{ pathname: 'shift/ask_shift_list', params: { id: pre.id } }}
+    href={{ pathname: 'shift/submit_form', params: { id: pre.id } }}
     asChild
   >
       <TouchableOpacity style={styles.listContainer} onPress={onPress}>
