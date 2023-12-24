@@ -34,6 +34,7 @@ const ManageShop = (): JSX.Element => {
         const { shopName, shopManager, address, businessDay, regularClosingDay, updatedAt } = doc.data()
         console.log(shopName)
         remoteShops.push({
+          id: doc.id,
           shopName,
           shopManager,
           address,
