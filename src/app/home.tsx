@@ -1,12 +1,16 @@
+// React
+import { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
+// EXPO
 import { router, useNavigation } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import List from '../components/List'
-import { useEffect, useState } from 'react'
-import LogOutButton from '../components/LogOutButton'
-import { type tProfile } from './types/profile'
+// FireStore
 import { auth, db } from '../config'
 import { doc, onSnapshot } from 'firebase/firestore'
+// 独自コンポーネント
+import { type tProfile } from './types/profile'
+import List from '../components/List'
+import LogOutButton from '../components/LogOutButton'
 
 const authProfile = (): void => { // プロフィール編集
   router.push('user/profile')

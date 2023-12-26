@@ -11,7 +11,7 @@ import { doc, onSnapshot } from 'firebase/firestore'
 import { type Shop } from '../types/shop'
 import CircleButton from '../../components/CircleButton'
 
-// 店舗詳細情報への遷移処理
+// 店舗詳細情報編集への遷移処理
 const handlePress = (id: string): void => {
   router.push({ pathname: 'utility/edit_shop', params: { id } })
 }
@@ -34,6 +34,7 @@ const ShopInfo = (): JSX.Element => {
         updatedAt
       } = shopDoc.data() as Shop
       setShop({
+        id: shopDoc.id,
         shopName,
         shopManager,
         address,

@@ -10,7 +10,6 @@ import { collection, addDoc } from 'firebase/firestore'
 import { db, auth } from '../../config'
 // 独自コンポーネント
 import CircleButton from '../../components/CircleButton'
-import { type inArrayMap } from '../types/in-array-map'
 
 // 募集するシフトを作成する
 const CreateAskShift = (): JSX.Element => {
