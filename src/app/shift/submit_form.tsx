@@ -28,8 +28,8 @@ const SubmitForm = (): JSX.Element => {
   const [pres, setPres] = useState<Pre>()
   // const [submittedLists, setSubmittedLists] = useState<string[]>([])
   const [submittedDates, setSubmittedDates] = useState<string[]>([])
-
-  const [start, setStart] = useState('')
+  // 追加
+  const [selectedTimes, setSelectedTimes] = useState<{ date: string; start: Date; end: Date }[]>([])
 
   const id = String(useLocalSearchParams().id)
   useEffect(() => {
@@ -52,22 +52,12 @@ const SubmitForm = (): JSX.Element => {
           endDate,
           submitted
         })
-        // // submittedの中身を配列に変換
-        // const submittedArray = Object.entries(submitted).map(([date, inArrayMap]) => {
-        //   return `Date: ${date}, Data: ${JSON.stringify(inArrayMap)}`;
-        // })
-        // setSubmittedLists(submittedArray)
         const dates = Object.keys(submitted).sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
         setSubmittedDates(dates)
       }
     })
     return unsubscribe
   }, [])
-
-  // const renderItem = ({ item }: { item: string }) => {
-  //   const pre: Pre = pres?.submitted[item] || {}
-  //   return <WriteShiftList pre={pre} />
-  // }
 
   // Timestamp型に変換する
   const convertToTimestamp = (date: string): Timestamp => {
@@ -104,15 +94,43 @@ const SubmitForm = (): JSX.Element => {
     UpdateDoc(date, newShiftData)
   }
 
+  const onSaveSelectedTime = (date: string, start: Date, end: Date): void => {
+    // 保存ボタンが押されたことを親コンポーネントに伝える
+    setSelectedTimes((prevSelectedTimes) => [
+      ...prevSelectedTimes,
+      { date, start, end }
+    ])
+  }
+
+  const saveToFirestore = (): void => {
+    if (selectedTimes.length === 0) {
+      return // 保存するデータがない場合は何もしない
+    }
+
+    // 保存処理を実行
+    const ref = doc(db, 'pre-shifts', id)
+    const updatedSubmitted: { [key: string]: inArrayMap[] } = {}
+
+    // 日付ごとにデータを集める
+    selectedTimes.forEach((selectedTime) => {
+      const { date, start, end } = selectedTime
+      if (!updatedSubmitted[date]) {
+        updatedSubmitted[date] = []
+      }
+      updatedSubmitted[date].push({ userID: auth.currentUser.uid, start, end })
+    })
+
+    // それぞれの日付のデータを Firestore に保存
+    Object.entries(updatedSubmitted).forEach(([date, shifts]) => {
+      const shiftData = shifts[0] // 今回は一つの要素のみを処理すると仮定
+      UpdateDoc(date, shiftData)
+    })
+  }
+
+
   return (
   // <TouchableWithoutFeedback onPress={disMissKeyBoard} style={styles.disMiss}>
       <SafeAreaView style={styles.safeArea}>
-        {/* <Text>{pres?.startDate}〜{pres?.endDate}</Text> */}
-        {/* <FlatList
-          data={submittedDates}
-          renderItem={({ item }) => <WriteShiftList pre={item} />}
-        /> */}
-
       <FlatList
         data={submittedDates}
         renderItem={({ item }) => (
@@ -125,7 +143,8 @@ const SubmitForm = (): JSX.Element => {
                 <WriteShiftList userID={shift.userID} start={shift.start} end={shift.end} />
               )}
             /> */}
-            <SelectWorkTime />
+            {/* <SelectWorkTime /> */}
+            <SelectWorkTime date={item} onAddTime={onSaveSelectedTime} />
             <TouchableOpacity onPress={() => { handleAddShift(item) }}>
               {/* <Text>配列に追加</Text> */}
             </TouchableOpacity>
@@ -133,6 +152,9 @@ const SubmitForm = (): JSX.Element => {
         )}
         keyExtractor={(date) => date}
       />
+      <TouchableOpacity onPress={saveToFirestore}>
+        <Text>firestoreに保存</Text>
+      </TouchableOpacity>
       </SafeAreaView>
   // </TouchableWithoutFeedback>
   )
