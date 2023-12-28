@@ -33,6 +33,9 @@ const SubmitForm = (): JSX.Element => {
   // const [submittedLists, setSubmittedLists] = useState<string[]>([])
   // 日付順に並び替えた配列
   const [submittedDates, setSubmittedDates] = useState<string[]>([])
+  // 変更を丸ごと持っておく
+  const [submitted, setSubmitted] = useState<{ [key: string]: inArrayMap[] }>({})
+  // 追加されるオブジェクト
   const [selectedTimes, setSelectedTimes] = useState<{ date: string; start: Date; end: Date }[]>([])
   const id = String(useLocalSearchParams().id) // ドキュメントid
 
@@ -57,6 +60,7 @@ const SubmitForm = (): JSX.Element => {
         // submittedのキーを日付順に並び替える
         const dates = Object.keys(submitted).sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
         setSubmittedDates(dates)
+        setSubmitted(submitted)
       }
     })
     return unsubscribe
@@ -68,10 +72,24 @@ const SubmitForm = (): JSX.Element => {
     return Timestamp.fromDate(dateObject)
   }
 
-  const UpdateDoc = (date: string, shiftData: inArrayMap): void => {
+  // const UpdateDoc = (date: string, shiftData: inArrayMap): void => {
+  //   const ref = doc(db, 'pre-shifts', id)
+  //   updateDoc(ref, {
+  //     [`submitted.${date}`]: arrayUnion(shiftData)
+  //   })
+  //     .then(() => {
+  //       console.log('success')
+  //       Alert.alert('できました')
+  //     })
+  //     .catch((error) => {
+  //       console.log(error, 'エラー')
+  //     })
+  // }
+
+  const UpdateDoc = (updatedSubmitted: { [key: string]: inArrayMap[] } ): void => {
     const ref = doc(db, 'pre-shifts', id)
     updateDoc(ref, {
-      [`submitted.${date}`]: arrayUnion(shiftData)
+      submitted: updatedSubmitted
     })
       .then(() => {
         console.log('success')
@@ -98,6 +116,10 @@ const SubmitForm = (): JSX.Element => {
   // }
 
   const onSaveSelectedTime = (date: string, start: Date, end: Date): void => {
+    if (start === null || end === null) { // オブジェクトが不十分な時
+      Alert.alert('時間を指定してください')
+      return
+    }
     setSelectedTimes((prevSelectedTimes) => [
       ...prevSelectedTimes, // これまでの配列
       { date, start, end } // 新しく配列に追加するオブジェクト
@@ -111,25 +133,38 @@ const SubmitForm = (): JSX.Element => {
 
     // // 保存処理を実行
     // const ref = doc(db, 'pre-shifts', id)
-    // 更新用の配列
-    const updatedSubmitted: { [key: string]: inArrayMap[] } = {}
+
+    // selectedTimeを元にsubmittedを更新
+    const updatedSubmitted: { [key: string]: inArrayMap[] } = { ...submitted }
+
+    Object.keys(updatedSubmitted).forEach((date) => {
+      if (!selectedTimes.some((time) => time.date === date)) {
+        // selectedTimesに含まれない日付の場合
+        updatedSubmitted[date] = [...(submitted[date] || [])] // 既存のデータがあればコピー
+      }
+    })
 
     // 日付ごとにデータを集める
     selectedTimes.forEach((selectedTime) => {
       const { date, start, end } = selectedTime
       if (!updatedSubmitted[date]) { // キー：dateがオブジェクトに存在しなければ作成
-        updatedSubmitted[date] = [] // 空の配列をセット
+        // updatedSubmitted[date] = [] // 空の配列をセット
+        updatedSubmitted[date] = [...(submitted[date] || [])]
       }
       if (auth.currentUser === null) { return }
-      // キーが一致する配列に追加する
+      // キーが一致する配列にselectedTimeから取り出したデータを追加する
       updatedSubmitted[date].push({ userID: auth.currentUser.uid, start, end })
     })
 
+    setSubmitted(updatedSubmitted)
+
+    UpdateDoc(updatedSubmitted)
+
     // それぞれの日付のデータを Firestore に保存
-    Object.entries(updatedSubmitted).forEach(([date, shifts]) => {
-      const shiftData = shifts[0] // 今回は一つの要素のみを処理すると仮定
-      UpdateDoc(date, shiftData)
-    })
+    // Object.entries(updatedSubmitted).forEach(([date, shifts]) => {
+    //   const shiftData = shifts[0] // 今回は一つの要素のみを処理すると仮定
+    //   UpdateDoc(date, shiftData)
+    // })
   }
 
   return (
