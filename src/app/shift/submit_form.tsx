@@ -1,16 +1,19 @@
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Keyboard } from 'react-native'
+// React
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Alert, Keyboard } from 'react-native'
+import { useEffect, useState } from 'react'
+import { FlatList } from 'react-native-gesture-handler'
+// EXPO
+import { useLocalSearchParams } from 'expo-router'
+// Fire Store
+import { auth, db } from '../../config'
+import { Timestamp, arrayUnion, doc, onSnapshot, updateDoc } from 'firebase/firestore'
+// 独自コンポーネント
+import { type Pre } from '../types/pre-shift'
+import { type inArrayMap } from '../types/in-array-map'
+import SelectWorkTime from '../../components/SelectWorkTime'
 
 // import SquareButton from '../../components/SquareButton'
 // import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import { useEffect, useState } from 'react'
-import { type Pre } from '../types/pre-shift'
-import { auth, db } from '../../config'
-import { Timestamp, arrayUnion, doc, onSnapshot, updateDoc } from 'firebase/firestore'
-import { FlatList } from 'react-native-gesture-handler'
-import WriteShiftList from '../../components/WriteShiftList'
-import { type inArrayMap } from '../types/in-array-map'
-import { useLocalSearchParams } from 'expo-router'
-import SelectWorkTime from '../../components/SelectWorkTime'
 
 // const temp = (): void => {
 //   Alert.alert('一時保存！')
@@ -24,20 +27,19 @@ import SelectWorkTime from '../../components/SelectWorkTime'
 //   Keyboard.dismiss()
 // }
 
+// シフト提出画面
 const SubmitForm = (): JSX.Element => {
   const [pres, setPres] = useState<Pre>()
   // const [submittedLists, setSubmittedLists] = useState<string[]>([])
+  // 日付順に並び替えた配列
   const [submittedDates, setSubmittedDates] = useState<string[]>([])
-  // 追加
   const [selectedTimes, setSelectedTimes] = useState<{ date: string; start: Date; end: Date }[]>([])
+  const id = String(useLocalSearchParams().id) // ドキュメントid
 
-  const id = String(useLocalSearchParams().id)
-  useEffect(() => {
+  useEffect(() => { // 表示データ取得
     if (auth.currentUser === null) { return }
-    // pre-shiftコレクションへの参照
-    // 取得したドキュメントidへの参照
     const remoteSubmittedLists: string[] = []
-    const documentid = 'Lky2ri2fCHrLF675dBIN'
+    // pre-shiftコレクションの取得したドキュメントidへの参照
     const ref = doc(db, 'pre-shifts', id)
     const unsubscribe = onSnapshot(ref, (preDoc) => {
       if (preDoc.exists()) {
@@ -52,6 +54,7 @@ const SubmitForm = (): JSX.Element => {
           endDate,
           submitted
         })
+        // submittedのキーを日付順に並び替える
         const dates = Object.keys(submitted).sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
         setSubmittedDates(dates)
       }
@@ -79,26 +82,25 @@ const SubmitForm = (): JSX.Element => {
       })
   }
 
-  const handleAddShift = (date: string): void => {
-    if (auth.currentUser === null) { return }
-    const userID = auth.currentUser.uid
-    const start = convertToTimestamp('2023-1-1')
-    const end = convertToTimestamp('2023-1-1')
-    // 保存するデータ作成
-    const newShiftData: inArrayMap = {
-      userID,
-      start,
-      end
-    }
-    // ドキュメントデータを更新する
-    UpdateDoc(date, newShiftData)
-  }
+  // const handleAddShift = (date: string): void => {
+  //   if (auth.currentUser === null) { return }
+  //   const userID = auth.currentUser.uid
+  //   const start = convertToTimestamp('2023-1-1')
+  //   const end = convertToTimestamp('2023-1-1')
+  //   // 保存するデータ作成
+  //   const newShiftData: inArrayMap = {
+  //     userID,
+  //     start,
+  //     end
+  //   }
+  //   // ドキュメントデータを更新する
+  //   UpdateDoc(date, newShiftData)
+  // }
 
   const onSaveSelectedTime = (date: string, start: Date, end: Date): void => {
-    // 保存ボタンが押されたことを親コンポーネントに伝える
     setSelectedTimes((prevSelectedTimes) => [
-      ...prevSelectedTimes,
-      { date, start, end }
+      ...prevSelectedTimes, // これまでの配列
+      { date, start, end } // 新しく配列に追加するオブジェクト
     ])
   }
 
@@ -107,16 +109,19 @@ const SubmitForm = (): JSX.Element => {
       return // 保存するデータがない場合は何もしない
     }
 
-    // 保存処理を実行
-    const ref = doc(db, 'pre-shifts', id)
+    // // 保存処理を実行
+    // const ref = doc(db, 'pre-shifts', id)
+    // 更新用の配列
     const updatedSubmitted: { [key: string]: inArrayMap[] } = {}
 
     // 日付ごとにデータを集める
     selectedTimes.forEach((selectedTime) => {
       const { date, start, end } = selectedTime
-      if (!updatedSubmitted[date]) {
-        updatedSubmitted[date] = []
+      if (!updatedSubmitted[date]) { // キー：dateがオブジェクトに存在しなければ作成
+        updatedSubmitted[date] = [] // 空の配列をセット
       }
+      if (auth.currentUser === null) { return }
+      // キーが一致する配列に追加する
       updatedSubmitted[date].push({ userID: auth.currentUser.uid, start, end })
     })
 
@@ -126,7 +131,6 @@ const SubmitForm = (): JSX.Element => {
       UpdateDoc(date, shiftData)
     })
   }
-
 
   return (
   // <TouchableWithoutFeedback onPress={disMissKeyBoard} style={styles.disMiss}>
@@ -145,9 +149,9 @@ const SubmitForm = (): JSX.Element => {
             /> */}
             {/* <SelectWorkTime /> */}
             <SelectWorkTime date={item} onAddTime={onSaveSelectedTime} />
-            <TouchableOpacity onPress={() => { handleAddShift(item) }}>
+            {/* <TouchableOpacity onPress={() => { handleAddShift(item) }}>
               {/* <Text>配列に追加</Text> */}
-            </TouchableOpacity>
+            {/* </TouchableOpacity> */}
           </View>
         )}
         keyExtractor={(date) => date}
