@@ -56,14 +56,16 @@ const Home = (): JSX.Element => {
           userName,
           mailAddress,
           password,
-          position
+          position,
+          storeIDs
         } = profileDoc.data() as tProfile
         setProfile({
           id: userId,
           userName,
           mailAddress,
           password,
-          position
+          position,
+          storeIDs
         })
       }
     })

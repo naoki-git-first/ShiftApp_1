@@ -14,7 +14,6 @@ import { type Shop } from '../types/shop'
 
 // appliesコレクションに参加申請を保存する
 const handleApply = (storeName: string, userID: string, userName: string): void => {
-  console.log(storeName, userID)
   const ref = collection(db, 'applies')
   addDoc(ref, {
     storeName,
@@ -77,6 +76,7 @@ const ApplyToJoin = (): JSX.Element => {
       snapshot.forEach((doc) => {
         const { shopName, shopManager, address, businessDay, regularClosingDay, updatedAt } = doc.data()
         remoteShops.push({
+          id: doc.id,
           shopName,
           shopManager,
           address,

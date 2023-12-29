@@ -2,9 +2,6 @@
 import React, { useState } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-// Fire Store
-import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../config'
 
 interface Props {
   date: string
@@ -12,16 +9,7 @@ interface Props {
 }
 
 // バイトの開始と終了時間のpickerコンポーネント
-const SelectWorkTime = (
-//   {
-//   date,
-//   onAddTime
-// }: {
-  // date: string
-  // onAddTime: (date: string, start: Date, end: Date) => void
-  props: Props
-// }
-): JSX.Element => {
+const SelectWorkTime = (props: Props): JSX.Element => {
   const { date, onAddTime } = props
   // start
   const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false)
@@ -54,28 +42,13 @@ const SelectWorkTime = (
   }
   // 00:00の形に整形する
   const formatTime = (time: Date): string => {
-    return time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    return time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
   }
 
   const saveSelectedTime = (): void => {
     // 親コンポーネントに選択された時間を追加する
     onAddTime(date, selectedStartTime, selectedEndTime)
   }
-
-
-
-  // const saveSelectedTime = (): void => {
-  //   const ref = collection(db, 'dateCheck')
-  //   addDoc(ref, {
-  //     selectedTime
-  //   })
-  //     .then((docRef) => {
-  //       console.log('success', docRef.id)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error, 'エラー')
-  //     })
-  // }
 
   return (
     <View style={styles.rowContainer}>
