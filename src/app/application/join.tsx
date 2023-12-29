@@ -50,14 +50,16 @@ const ApplyToJoin = (): JSX.Element => {
             userName,
             mailAddress,
             password,
-            position
+            position,
+            storeIDs
           } = docRef.data() as tProfile
           setProfile({
             id: docRef.id,
             userName,
             mailAddress,
             password,
-            position
+            position,
+            storeIDs
           })
         }
       })

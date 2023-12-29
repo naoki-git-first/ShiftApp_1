@@ -1,5 +1,5 @@
 import { router } from 'expo-router'
-import { View, TouchableOpacity, Text, StyleSheet, SafeAreaView } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 
 const authProfile = (): void => { // プロフィール編集
   router.push('user/profile')
