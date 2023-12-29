@@ -11,6 +11,7 @@ import { doc, onSnapshot } from 'firebase/firestore'
 import { type tProfile } from './types/profile'
 import List from '../components/List'
 import LogOutButton from '../components/LogOutButton'
+import Footer from '../components/Footer'
 
 const authProfile = (): void => { // プロフィール編集
   router.push('user/profile')
@@ -107,6 +108,7 @@ const Home = (): JSX.Element => {
         {admin && <List text='店舗管理' onPress={shopList} />}
         <StatusBar style="auto" />
       </View>
+      <Footer position={profile?.position} />
     </SafeAreaView>
   )
 }
