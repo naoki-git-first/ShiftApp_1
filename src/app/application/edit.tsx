@@ -40,7 +40,7 @@ const EditApplication = (): JSX.Element => {
     const position = 'アルバイト'
     updateDoc(ref, {
       position,
-      storeIDs: arrayUnion(storeID)
+      storeIDs: arrayUnion(storeID) // 所属店舗に追加
     })
       .then(() => {
         // const remoteStoreIDs = docRef?.data()?.storeIDs

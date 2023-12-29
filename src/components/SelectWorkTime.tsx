@@ -17,6 +17,10 @@ const SelectWorkTime = (props: Props): JSX.Element => {
   // end
   const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false)
   const [selectedEndTime, setSelectedEndTime] = useState(null)
+  // check
+  const [isChecked, setIsChecked] = useState(false)
+  const [startCheck, setStartCheck] = useState(false)
+  const [endCheck, setEndCheck] = useState(false)
 
   const showStartTimePicker = (): void => { // start pickerの表示
     setStartTimePickerVisibility(true)
@@ -35,10 +39,14 @@ const SelectWorkTime = (props: Props): JSX.Element => {
   const handleStartConfirm = (date: any): void => { // start 確認ボタンの処理
     hideStartTimePicker()
     setSelectedStartTime(date)
+    setStartCheck(true)
+    setIsChecked(false)
   }
   const handleEndConfirm = (date: any): void => { // end 確認ボタンの処理
     hideEndTimePicker()
     setSelectedEndTime(date)
+    setEndCheck(true)
+    setIsChecked(false)
   }
   // 00:00の形に整形する
   const formatTime = (time: Date): string => {
@@ -48,6 +56,7 @@ const SelectWorkTime = (props: Props): JSX.Element => {
   const saveSelectedTime = (): void => {
     // 親コンポーネントに選択された時間を追加する
     onAddTime(date, selectedStartTime, selectedEndTime)
+    setIsChecked(true) // ボタンを非活性化
   }
 
   return (
@@ -76,7 +85,14 @@ const SelectWorkTime = (props: Props): JSX.Element => {
         onCancel={hideEndTimePicker} // キャンセル
         is24Hour={true} // 24時間表示
       />
-      <Button title="追加" onPress={saveSelectedTime} />
+      { startCheck &&
+        endCheck &&
+        (<Button
+          title={isChecked ? '✔' : '追加'}
+          onPress={saveSelectedTime}
+          disabled={isChecked}
+        />)
+      }
     </View>
   )
 }

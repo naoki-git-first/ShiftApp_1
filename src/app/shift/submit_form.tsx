@@ -122,7 +122,7 @@ const SubmitForm = (): JSX.Element => {
           keyExtractor={(date) => date}
         />
         <TouchableOpacity onPress={saveToFirestore}>
-          <Text style={styles.storeButton}>シフトを提出する</Text>
+          <Text style={styles.storeButton}>シフトを提出⇧</Text>
         </TouchableOpacity>
       </SafeAreaView>
   // </TouchableWithoutFeedback>
@@ -161,7 +161,9 @@ const styles = StyleSheet.create({
     fontSize: 28,
     alignSelf: 'flex-end',
     paddingVertical: 12,
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
+    color: '#ffffff',
+    backgroundColor: '#88ff88'
   }
 })
 
