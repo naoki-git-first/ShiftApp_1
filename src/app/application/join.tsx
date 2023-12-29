@@ -13,9 +13,10 @@ import { type tProfile } from '../types/profile'
 import { type Shop } from '../types/shop'
 
 // appliesコレクションに参加申請を保存する
-const handleApply = (storeName: string, userID: string, userName: string): void => {
+const handleApply = (storeID: string, storeName: string, userID: string, userName: string): void => {
   const ref = collection(db, 'applies')
   addDoc(ref, {
+    storeID,
     storeName,
     userID,
     userName,
@@ -36,7 +37,7 @@ const ApplyToJoin = (): JSX.Element => {
   const [profile, setProfile] = useState<tProfile | null>(null) // プロフィール用
   // const [showConfirmation, setShowConfirmation] = useState(false) // 確認ダイアログ用
   // const [selectedShopName, setSelectedShopName] = useState('') // 確認ダイアログの店舗名用
-  const [confirmationData, setConfirmationData] = useState<{ show: boolean, shopName: string }>({ show: false, shopName: '' })
+  const [confirmationData, setConfirmationData] = useState<{ show: boolean, storeID: string, shopName: string }>({ show: false, storeID: '', shopName: '' })
 
   useEffect(() => {
     if (auth.currentUser === null) { return }
@@ -92,21 +93,21 @@ const ApplyToJoin = (): JSX.Element => {
     return unsubscribe
   }
   // 参加するボタンが押された時の処理
-  const handleSave = (selectedShopName: string): void => {
+  const handleSave = (selectedStoreID: string, selectedShopName: string): void => {
     // ユーザーに確認を求める
-    setConfirmationData({ show: true, shopName: selectedShopName })
+    setConfirmationData({ show: true, storeID: selectedStoreID, shopName: selectedShopName })
   }
   // 確認ダイアログで承認された時
   const handleConfirmationOK = (): void => {
     // データを保存する
-    handleApply(confirmationData.shopName, String(profile?.id), String(profile?.userName))
+    handleApply(confirmationData.storeID, confirmationData.shopName, String(profile?.id), String(profile?.userName))
     // 確認ダイアログを非表示にする
-    setConfirmationData({ show: false, shopName: '' })
+    setConfirmationData({ show: false, storeID: '', shopName: '' })
   }
   // 確認ダイアログで拒否された時
   const handleConfirmationCancel = (): void => {
     // 確認ダイアログを非表示にする
-    setConfirmationData({ show: false, shopName: '' })
+    setConfirmationData({ show: false, storeID: '', shopName: '' })
   }
 
   return (
@@ -140,7 +141,7 @@ const ApplyToJoin = (): JSX.Element => {
               buttonColor="#22ddff"
               textColor="#ffffff"
               onPress={() => {
-                handleSave(item.shopName)
+                handleSave(item.id, item.shopName)
               }
               }
             />

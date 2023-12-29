@@ -19,9 +19,10 @@ const EditApplication = (): JSX.Element => {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const remoteApplication: Application[] = []
       snapshot.forEach((doc) => {
-        const { storeName, userID, userName, createdAt } = doc.data()
+        const { storeID, storeName, userID, userName, createdAt } = doc.data()
         remoteApplication.push({
           id: doc.id,
+          storeID,
           storeName,
           userID,
           userName,
@@ -33,10 +34,8 @@ const EditApplication = (): JSX.Element => {
     return unsubscribe
   }, [])
 
-  const handleApprove = (storeID: string): void => {
-    if (auth.currentUser === null) { return }
-    const userId = auth.currentUser.uid
-    const ref = doc(db, 'users', userId)
+  const handleApprove = (storeID: string, userID: string): void => {
+    const ref = doc(db, 'users', userID)
     const position = 'アルバイト'
     updateDoc(ref, {
       position,
@@ -58,7 +57,7 @@ const EditApplication = (): JSX.Element => {
       <FlatList
         data={applications}
         renderItem={({ item }) => (
-          <ApplicationList application={item} onApprove={() => { handleApprove(item.storeName) }} />
+          <ApplicationList application={item} onApprove={() => { handleApprove(item.storeID, item.userID) }} />
         )}
       />
     </SafeAreaView>
