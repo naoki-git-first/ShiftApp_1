@@ -13,30 +13,22 @@ import List from '../components/List'
 import LogOutButton from '../components/LogOutButton'
 import Footer from '../components/Footer'
 
-const authProfile = (): void => { // プロフィール編集
-  router.push('user/profile')
-}
-const checkShift = (): void => { // シフト確認
-  router.push('shift/calendar')
-}
-const submitShift = (): void => { // シフト提出
-  router.push('shift/ask_shift_list')
-}
-const editShift = (): void => { // シフト編集
-  router.push('utility/shift_shop_list')
-}
-const wantedShift = (): void => { // シフト募集
-  router.push('shift/create_ask_shift')
-}
-const memberList = (): void => { // メンバー管理
-  router.push('utility/member_shop_list')
-}
-const shopList = (): void => { // 店舗管理
-  router.push('shops/shop_list')
-}
-const applyToJoin = (): void => { // 加入申請
-  router.push('application/join')
-}
+// プロフィール編集
+const authProfile = (): void => { router.push('user/profile') }
+// シフト確認
+const checkShift = (): void => { router.push('shift/calendar') }
+// シフト提出
+const submitShift = (): void => { router.push('shift/ask_shift_list') }
+// シフト編集
+const editShift = (): void => { router.push('utility/shift_shop_list') }
+// シフト募集
+const wantedShift = (): void => { router.push('shift/create_ask_shift') }
+// メンバー管理
+const memberList = (): void => { router.push('utility/member_shop_list') }
+// 店舗管理
+const shopList = (): void => { router.push('shops/shop_list') }
+// 加入申請
+const applyToJoin = (): void => { router.push('application/join') }
 
 const Home = (): JSX.Element => {
   const navigation = useNavigation()

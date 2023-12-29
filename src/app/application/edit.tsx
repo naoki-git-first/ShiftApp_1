@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, Text } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 // FireStore
-import { collection, onSnapshot, query, orderBy, getDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore'
-import { auth, db } from '../../config'
+import { collection, onSnapshot, query, orderBy, doc, updateDoc, arrayUnion } from 'firebase/firestore'
+import { db } from '../../config'
 // 独自コンポーネント
 import ApplicationList from '../../components/ApplicationList'
 import { type Application } from '../types/application'
-import { tProfile } from '../types/profile'
 
 // 承認チェック
 const EditApplication = (): JSX.Element => {
