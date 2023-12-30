@@ -6,7 +6,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import { router } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
 // FireStore
-import { collection, addDoc, Timestamp } from 'firebase/firestore'
+import { collection, addDoc, Timestamp, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db, auth } from '../../config'
 // 独自コンポーネント
 import CircleButton from '../../components/CircleButton'
@@ -21,8 +21,9 @@ const handlePress = (
 ): void => {
   if (auth.currentUser === null) { return }
   // storesコレクションへの参照
-  const ref = collection(db, 'stores')
-  addDoc(ref, {
+  const storeRef = collection(db, 'stores')
+  // 新しい店舗ドキュメントを追加
+  addDoc(storeRef, {
     shopName,
     shopManager,
     address,
@@ -30,9 +31,38 @@ const handlePress = (
     regularClosingDay,
     updatedAt: Timestamp.fromDate(new Date())
   })
-    .then((docRef) => {
-      console.log('success', docRef.id)
-      router.back()
+    .then((newStoreDocRef) => {
+      // 新しい店舗ドキュメントのIDを取得
+      const newStoreDocId = newStoreDocRef.id
+      console.log(newStoreDocRef.id)
+
+      // 現在のユーザーのドキュメント参照を取得
+      if (auth.currentUser === null) { return }
+      const userId = auth.currentUser.uid
+      const userRef = doc(db, 'users', userId)
+      // ユーザーのstoreIDsを更新
+      getDoc(userRef)
+        .then((userDoc) => {
+          if (userDoc.exists()) {
+            const currentStoreIDs = userDoc.data()?.storeIDs
+            const updatedStoreIDs = [...currentStoreIDs, newStoreDocId]
+
+            // storeIDsを更新
+            updateDoc(userRef, {
+              storeIDs: updatedStoreIDs
+            })
+              .then(() => {
+                console.log('success')
+                router.back()
+              })
+              .catch((error: any) => {
+                console.error(error, 'エラー')
+              })
+          }
+        })
+        .catch((error) => {
+          console.error(error, 'エラー')
+        })
     })
     .catch((error) => {
       console.log(error, 'エラー')

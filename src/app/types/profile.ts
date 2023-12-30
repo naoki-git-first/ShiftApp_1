@@ -4,6 +4,7 @@ interface tProfile {
   mailAddress: string
   password: string
   position: string
+  storeIDs: string[]
 }
 
 export type { tProfile }

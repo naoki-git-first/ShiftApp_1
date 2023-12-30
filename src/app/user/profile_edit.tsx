@@ -29,7 +29,7 @@ const profileEdit = (
     position,
     updatedAt: Timestamp.fromDate(new Date())
   })
-    .then((docRef) => {
+    .then(() => {
       router.back()
     })
     .catch((error) => {
