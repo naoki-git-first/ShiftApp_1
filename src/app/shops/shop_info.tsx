@@ -1,6 +1,6 @@
 // React
 import { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, ScrollView } from 'react-native'
 // EXPO
 import { router, useLocalSearchParams } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -49,21 +49,21 @@ const ShopInfo = (): JSX.Element => {
   }, [])
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View>
-        <Text style={styles.text}>店舗名：{shop?.shopName}</Text>
-      </View>
-      <View>
-        <Text style={styles.text}>店長：{shop?.shopManager}</Text>
-      </View>
-      <View>
-        <Text style={styles.text}>住所：{shop?.address}</Text>
-      </View>
-      <View>
-        <Text style={styles.text}>営業日：{shop?.businessDay}</Text>
-      </View>
-      <View>
-        <Text style={styles.text}>定休日：{shop?.regularClosingDay}</Text>
-      </View>
+      <Text style={styles.text}>店舗名：{shop?.shopName}</Text>
+      <Text style={styles.text}>店長：{shop?.shopManager}</Text>
+      <Text style={styles.text}>住所：{shop?.address}</Text>
+      <Text style={styles.text}>営業日：{shop?.businessDay}</Text>
+      <Text style={styles.text}>定休日：{shop?.regularClosingDay}</Text>
+      <Text style={styles.text}>メンバー：</Text>
+      <ScrollView>
+        <View style={styles.memberListContainer}>
+          {shop?.member?.map((memberInfo, index) => (
+            <View key={index}>
+              <Text style={styles.memberList}>{memberInfo.userID}: {memberInfo.userName}</Text>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
       {/* 編集ボタン */}
       <CircleButton buttonColor='#22ff22' textColor='white' onPress={() => { handlePress(id) }}>
         <MaterialIcons name='edit' size={40} />
@@ -82,6 +82,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     paddingVertical: 12,
     paddingHorizontal: 12
+  },
+  memberListContainer: {
+    paddingVertical: 12,
+    paddingHorizontal: 8
+  },
+  memberList: {
+    fontSize: 20,
+    backgroundColor: '#eeeeee',
+    borderWidth: 0.5,
+    borderBlockColor: '#aaaaaa',
+    paddingVertical: 8,
+    paddingHorizontal: 4
   }
 })
 

@@ -33,7 +33,7 @@ const EditApplication = (): JSX.Element => {
     return unsubscribe
   }, [])
 
-  const handleApprove = (storeID: string, userID: string): void => {
+  const handleApprove = (storeID: string, userID: string, userName: string): void => {
     const userRef = doc(db, 'users', userID)
     const storeRef = doc(db, 'stores', storeID)
     const position = 'アルバイト'
@@ -45,7 +45,7 @@ const EditApplication = (): JSX.Element => {
         console.log('success')
         // 店舗のmember配列に追加する
         updateDoc(storeRef, {
-          member: arrayUnion(userID) // 重複なしでメンバーに追加
+          member: arrayUnion({ userID, userName }) // 重複なしでメンバーに追加
         })
           .then(() => {
             console.log('success')
@@ -65,7 +65,7 @@ const EditApplication = (): JSX.Element => {
       <FlatList
         data={applications}
         renderItem={({ item }) => (
-          <ApplicationList application={item} onApprove={() => { handleApprove(item.storeID, item.userID) }} />
+          <ApplicationList application={item} onApprove={() => { handleApprove(item.storeID, item.userID, item.userName) }} />
         )}
       />
     </SafeAreaView>

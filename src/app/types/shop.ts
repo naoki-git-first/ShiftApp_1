@@ -1,4 +1,5 @@
 import { type Timestamp } from 'firebase/firestore'
+import { type MemberArray } from './member-array'
 
 interface Shop {
   id: string
@@ -7,7 +8,7 @@ interface Shop {
   address: string
   businessDay: string
   regularClosingDay: string
-  member: string[]
+  member: MemberArray[]
   updatedAt: Timestamp
 }
 
