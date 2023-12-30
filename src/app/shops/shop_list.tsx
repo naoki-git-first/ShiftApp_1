@@ -1,12 +1,12 @@
 // React
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { useEffect, useState } from 'react'
 // EXPO
 import { router } from 'expo-router'
 import { Feather } from '@expo/vector-icons'
 // FireStore
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
+import { collection, onSnapshot, query, orderBy, doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../config'
 // 独自コンポーネント
 import CircleButton from '../../components/CircleButton'
@@ -20,40 +20,88 @@ const create = (): void => {
 
 // 管理店舗のリスト
 const ManageShop = (): JSX.Element => {
-  const [shops, setShops] = useState<Shop[]>([])
+  // const [shops, setShops] = useState<Shop[]>([])
+  const [userStores, setUserStores] = useState([])
+
   useEffect(() => {
     if (auth.currentUser === null) { return }
-    // storesコレクションへの参照
-    const ref = collection(db, 'stores')
-    // 降順でクエリを発行
-    const q = query(ref, orderBy('updatedAt', 'desc'))
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      // if (snapshot.exists()) {
-      const remoteShops: Shop[] = []
-      snapshot.forEach((doc) => {
-        const { shopName, shopManager, address, businessDay, regularClosingDay, updatedAt } = doc.data()
-        console.log(shopName)
-        remoteShops.push({
-          id: doc.id,
-          shopName,
-          shopManager,
-          address,
-          businessDay,
-          regularClosingDay,
-          updatedAt
-        })
+    const userID = auth.currentUser.uid
+    const userRef = doc(db, 'users', userID)
+    getDoc(userRef)
+      .then((userDoc) => {
+        if (userDoc.exists()) {
+          const storeIDs = userDoc.data()?.storeIDs
+
+          // 各店舗IDに対応する店舗情報を取得
+          const storePromises = storeIDs.map(async (storeID: string) => {
+            const storeDocRef = doc(db, 'stores', storeID)
+
+            return await getDoc(storeDocRef)
+              .then((storeDoc) => {
+                if (storeDoc.exists()) {
+                  return { id: storeDoc.id, ...storeDoc.data() }
+                }
+                return null
+              })
+              .catch((error) => {
+                console.log(error)
+                return null
+              })
+          })
+
+          // Promise.allで全ての店舗情報を取得できたら実行する
+          Promise.all(storePromises)
+            .then((stores) => {
+              // storesには店舗情報が格納される
+              setUserStores(stores.filter((store) => store != null))
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        }
       })
-      // }
-      setShops(remoteShops)
-    })
-    return unsubscribe
+      .catch((error) => {
+        console.log(error)
+      })
+    // // storesコレクションへの参照
+    // const ref = collection(db, 'stores')
+    // // 降順でクエリを発行
+    // const q = query(ref, orderBy('updatedAt', 'desc'))
+    // const unsubscribe = onSnapshot(q, (snapshot) => {
+    //   // if (snapshot.exists()) {
+    //   const remoteShops: Shop[] = []
+    //   snapshot.forEach((doc) => {
+    //     const { shopName, shopManager, address, businessDay, regularClosingDay, updatedAt } = doc.data()
+    //     console.log(shopName)
+    //     remoteShops.push({
+    //       id: doc.id,
+    //       shopName,
+    //       shopManager,
+    //       address,
+    //       businessDay,
+    //       regularClosingDay,
+    //       updatedAt
+    //     })
+    //   })
+    //   // }
+    //   setShops(remoteShops)
+    // })
+    // return unsubscribe
   }, [])
   return (
     <SafeAreaView style={styles.safeArea}>
-      <FlatList
+      {/* <FlatList
         data={shops}
         renderItem={({ item }) => <ShopList shop={item} />}
-      />
+      /> */}
+      <Text style={styles.title}>所属・管理店舗一覧</Text>
+      <FlatList
+          data={userStores}
+          // keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <ShopList shop={item} />
+          )}
+        />
       <CircleButton buttonColor='#22ff22' textColor='white' onPress={create} >
         <Feather name='plus' size={40} />
       </CircleButton>
@@ -76,6 +124,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 32,
     textAlign: 'center'
+  },
+  title: {
+    fontSize: 28,
+    alignSelf: 'center',
+    paddingVertical: 12,
+    backgroundColor: '#ffff00'
   }
 })
 
