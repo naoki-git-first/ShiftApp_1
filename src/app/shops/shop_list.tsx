@@ -1,17 +1,16 @@
 // React
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { useEffect, useState } from 'react'
 // EXPO
 import { router } from 'expo-router'
 import { Feather } from '@expo/vector-icons'
 // FireStore
-import { collection, onSnapshot, query, orderBy, doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { db, auth } from '../../config'
 // 独自コンポーネント
 import CircleButton from '../../components/CircleButton'
 import ShopList from '../../components/ShopList'
-import { type Shop } from '../types/shop'
 
 // 管理店舗作成画面へ
 const create = (): void => {
@@ -63,37 +62,9 @@ const ManageShop = (): JSX.Element => {
       .catch((error) => {
         console.log(error)
       })
-    // // storesコレクションへの参照
-    // const ref = collection(db, 'stores')
-    // // 降順でクエリを発行
-    // const q = query(ref, orderBy('updatedAt', 'desc'))
-    // const unsubscribe = onSnapshot(q, (snapshot) => {
-    //   // if (snapshot.exists()) {
-    //   const remoteShops: Shop[] = []
-    //   snapshot.forEach((doc) => {
-    //     const { shopName, shopManager, address, businessDay, regularClosingDay, updatedAt } = doc.data()
-    //     console.log(shopName)
-    //     remoteShops.push({
-    //       id: doc.id,
-    //       shopName,
-    //       shopManager,
-    //       address,
-    //       businessDay,
-    //       regularClosingDay,
-    //       updatedAt
-    //     })
-    //   })
-    //   // }
-    //   setShops(remoteShops)
-    // })
-    // return unsubscribe
   }, [])
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* <FlatList
-        data={shops}
-        renderItem={({ item }) => <ShopList shop={item} />}
-      /> */}
       <Text style={styles.title}>所属・管理店舗一覧</Text>
       <FlatList
           data={userStores}

@@ -7,6 +7,7 @@ interface Shop {
   address: string
   businessDay: string
   regularClosingDay: string
+  member: string[]
   updatedAt: Timestamp
 }
 

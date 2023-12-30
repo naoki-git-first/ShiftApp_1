@@ -13,7 +13,7 @@ import CircleButton from '../../components/CircleButton'
 
 // 店舗詳細情報編集への遷移処理
 const handlePress = (id: string): void => {
-  router.push({ pathname: 'utility/edit_shop', params: { id } })
+  router.push({ pathname: 'shops/edit_shop', params: { id } })
 }
 // 店舗情報詳細
 const ShopInfo = (): JSX.Element => {

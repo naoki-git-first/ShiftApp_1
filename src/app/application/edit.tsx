@@ -34,16 +34,25 @@ const EditApplication = (): JSX.Element => {
   }, [])
 
   const handleApprove = (storeID: string, userID: string): void => {
-    const ref = doc(db, 'users', userID)
+    const userRef = doc(db, 'users', userID)
+    const storeRef = doc(db, 'stores', storeID)
     const position = 'アルバイト'
-    updateDoc(ref, {
+    updateDoc(userRef, {
       position,
-      storeIDs: arrayUnion(storeID) // 所属店舗に追加
+      storeIDs: arrayUnion(storeID) // 重複なしで所属店舗に追加
     })
       .then(() => {
-        // const remoteStoreIDs = docRef?.data()?.storeIDs
-        // setStoreIDs(remoteStoreIDs)
         console.log('success')
+        // 店舗のmember配列に追加する
+        updateDoc(storeRef, {
+          member: arrayUnion(userID) // 重複なしでメンバーに追加
+        })
+          .then(() => {
+            console.log('success')
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       })
       .catch((error) => {
         console.log(error)
