@@ -85,7 +85,8 @@ const ApplyToJoin = (): JSX.Element => {
           address,
           businessDay,
           regularClosingDay,
-          updatedAt
+          updatedAt,
+          member: []
         })
       })
       setSearchResults(remoteShops)

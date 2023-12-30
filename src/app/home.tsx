@@ -100,7 +100,7 @@ const Home = (): JSX.Element => {
         {admin && <List text='店舗管理' onPress={shopList} />}
         <StatusBar style="auto" />
       </View>
-      <Footer position={profile?.position} />
+      <Footer position={profile.position} />
     </SafeAreaView>
   )
 }

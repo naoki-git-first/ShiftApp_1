@@ -26,7 +26,11 @@ const applyToJoin = (): void => { // 加入申請
   router.push('application/join')
 }
 
-const Footer = ({ position }): JSX.Element => {
+interface Props {
+  position: string
+}
+
+const Footer = ({ position }: Props): JSX.Element => {
   return (
     <View style={styles.view}>
       {/* アルバイト表示 */}
@@ -41,7 +45,7 @@ const Footer = ({ position }): JSX.Element => {
       {/* 店長表示 */}
       { position === '店長' && (
         <View style={styles.container}>
-          <TouchableOpacity onPress={editShift} style={styles.item}><Text>シフト編集</Text></TouchableOpacity>
+          <TouchableOpacity onPress={editShift} ><Text style={styles.item}>シフト編集</Text></TouchableOpacity>
           <TouchableOpacity onPress={wantedShift} ><Text style={styles.item}>シフト募集</Text></TouchableOpacity>
           <TouchableOpacity onPress={memberList} ><Text style={styles.item}>メンバー管理</Text></TouchableOpacity>
           <TouchableOpacity onPress={authProfile} ><Text style={styles.item}>プロフィール</Text></TouchableOpacity>

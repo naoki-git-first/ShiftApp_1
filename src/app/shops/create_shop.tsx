@@ -44,7 +44,7 @@ const handlePress = (
       getDoc(userRef)
         .then((userDoc) => {
           if (userDoc.exists()) {
-            const currentStoreIDs = userDoc.data()?.storeIDs || []
+            const currentStoreIDs = userDoc.data()?.storeIDs
             const updatedStoreIDs = [...currentStoreIDs, newStoreDocId]
 
             // storeIDsを更新

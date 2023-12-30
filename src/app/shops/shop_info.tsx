@@ -31,6 +31,7 @@ const ShopInfo = (): JSX.Element => {
         address,
         businessDay,
         regularClosingDay,
+        member,
         updatedAt
       } = shopDoc.data() as Shop
       setShop({
@@ -40,6 +41,7 @@ const ShopInfo = (): JSX.Element => {
         address,
         businessDay,
         regularClosingDay,
+        member,
         updatedAt
       })
     })
