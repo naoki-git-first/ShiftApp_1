@@ -1,74 +1,131 @@
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Keyboard } from 'react-native'
+// React
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import { useEffect, useState } from 'react'
+import { FlatList } from 'react-native-gesture-handler'
+// EXPO
+import { useLocalSearchParams } from 'expo-router'
+// Fire Store
+import { auth, db } from '../../config'
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore'
+// 独自コンポーネント
+import { type Pre } from '../types/pre-shift'
+import { type inArrayMap } from '../types/in-array-map'
+import SelectWorkTime from '../../components/SelectWorkTime'
 
-import SquareButton from '../../components/SquareButton'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
-
-const temp = (): void => {
-  Alert.alert('一時保存！')
-}
-
-const submit = (): void => {
-  Alert.alert('提出！')
-}
-
-const disMissKeyBoard = (): void => {
-  Keyboard.dismiss()
-}
-
+// シフト提出画面
 const SubmitForm = (): JSX.Element => {
+  const [pres, setPres] = useState<Pre>()
+  // 日付順に並び替えた配列
+  const [submittedDates, setSubmittedDates] = useState<string[]>([])
+  // submittedのデータを保持
+  const [submitted, setSubmitted] = useState<Record<string, inArrayMap[]>>({})
+  // 新たに追加されるオブジェクト
+  const [selectedTimes, setSelectedTimes] = useState<Array<{ date: string, start: Date, end: Date }>>([])
+
+  const id = String(useLocalSearchParams().id) // ドキュメントid
+
+  useEffect(() => { // 表示データ取得
+    if (auth.currentUser === null) { return }
+    // pre-shiftコレクションの取得したドキュメントidへの参照
+    const ref = doc(db, 'pre-shifts', id)
+    const unsubscribe = onSnapshot(ref, (preDoc) => {
+      if (preDoc.exists()) {
+        const {
+          startDate,
+          endDate,
+          submitted
+        } = preDoc.data() as Pre
+        setPres({
+          id: preDoc.id,
+          startDate,
+          endDate,
+          submitted
+        })
+        // submittedのキーを日付順に並び替える
+        const dates = Object.keys(submitted).sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+        setSubmittedDates(dates) // 募集期間
+        setSubmitted(submitted) // 既存データ
+      }
+    })
+    return unsubscribe
+  }, [])
+
+  // 選択された時間を配列に追加する
+  const onSaveSelectedTime = (date: string, start: Date, end: Date): void => {
+    if (start === null || end === null) { // オブジェクトが不十分な時
+      Alert.alert('時間を指定してください')
+      return
+    }
+    setSelectedTimes((prevSelectedTimes) => [
+      ...prevSelectedTimes, // これまで追加した要素
+      { date, start, end } // 新しく配列に追加するオブジェクト
+    ])
+  }
+
+  // 選択された時間を保存する
+  const saveToFirestore = (): void => {
+    if (selectedTimes.length === 0) {
+      return // 追加で保存するデータがない場合は何もしない
+    }
+
+    // selectedTimeを元にsubmittedを更新
+    const updatedSubmitted: Record<string, inArrayMap[]> = { ...submitted }
+
+    // Object.keys(updatedSubmitted).forEach((date) => {
+    //   if (!selectedTimes.some((time) => time.date === date)) {
+    //     // selectedTimesに含まれない日付の場合
+    //     updatedSubmitted[date] = [...(submitted[date] || [])] // 既存のデータがあればコピー
+    //   }
+    // })
+
+    // 日付ごとにデータを集める
+    selectedTimes.forEach((selectedTime) => {
+      const { date, start, end } = selectedTime
+      // if (!updatedSubmitted[date]) { // キー：dateがオブジェクトに存在しなければ作成
+      //   updatedSubmitted[date] = [...(submitted[date] || [])]
+      // }
+      if (auth.currentUser === null) { return }
+      // キーが一致する配列にselectedTimeから取り出したデータを追加する
+      updatedSubmitted[date].push({ userID: auth.currentUser.uid, start, end })
+    })
+    // setSubmitted(updatedSubmitted)
+    UpdateDoc(updatedSubmitted)
+  }
+
+  // 更新処理
+  const UpdateDoc = (updatedSubmitted: Record<string, inArrayMap[]>): void => {
+    const ref = doc(db, 'pre-shifts', id)
+    updateDoc(ref, {
+      submitted: updatedSubmitted
+    })
+      .then(() => {
+        console.log('success')
+        Alert.alert('提出しました')
+      })
+      .catch((error) => {
+        console.log(error, 'エラー')
+      })
+  }
+
   return (
-    // <TouchableWithoutFeedback onPress={disMissKeyBoard} style={styles.disMiss}>
+  // <TouchableWithoutFeedback onPress={disMissKeyBoard} style={styles.disMiss}>
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
-          <View style={styles.listContainer}>
-            <Text style={styles.listInnerText}>1/1</Text>
-            <TextInput
-              style={styles.inputTime}
-              value={hour}
-              onChangeText={(text) => { setHour(text) }}
-              // autoCapitalize='none'
-              // keyboardType='email-address'
-              // placeholder='Email Address'
-              // textContentType='emailAddress'
-            />
-            <Text style={styles.listInnerText}>:</Text>
-            <TextInput
-              style={styles.inputTime}
-              value={hour}
-              onChangeText={(text) => { setHour(text) }}
-              // autoCapitalize='none'
-              // keyboardType='email-address'
-              // placeholder='Email Address'
-              // textContentType='emailAddress'
-            />
-            <Text style={styles.listInnerText}>~</Text>
-            <TextInput
-              style={styles.inputTime}
-              value={hour}
-              onChangeText={(text) => { setHour(text) }}
-              // autoCapitalize='none'
-              // keyboardType='email-address'
-              // placeholder='Email Address'
-              // textContentType='emailAddress'
-            />
-            <Text style={styles.listInnerText}>:</Text>
-            <TextInput
-              style={styles.inputTime}
-              value={hour}
-              onChangeText={(text) => { setHour(text) }}
-              // autoCapitalize='none'
-              // keyboardType='email-address'
-              // placeholder='Email Address'
-              // textContentType='emailAddress'
-            />
-          </View>
-          <View style={styles.rowContainer}>
-            <SquareButton text='一時保存' buttonColor='#2299ff' textColor='white' onPress={temp} />
-            <SquareButton text='提出' buttonColor='#ff2299' textColor='white' onPress={submit} />
-          </View>
-        </View>
+        <Text>{ pres?.startDate }</Text>
+        <FlatList
+          data={submittedDates}
+          renderItem={({ item }) => (
+            <View style={styles.listContainer}>
+              <Text style={styles.dateText}>{item}</Text>
+              <SelectWorkTime date={item} onAddTime={onSaveSelectedTime} />
+            </View>
+          )}
+          keyExtractor={(date) => date}
+        />
+        <TouchableOpacity onPress={saveToFirestore}>
+          <Text style={styles.storeButton}>シフトを提出⇧</Text>
+        </TouchableOpacity>
       </SafeAreaView>
-    // </TouchableWithoutFeedback>
+  // </TouchableWithoutFeedback>
   )
 }
 
@@ -79,15 +136,12 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1
   },
-  rowContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+  dateText: {
+    flex: 1,
+    fontSize: 24,
+    textAlign: 'center'
   },
   listContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#dddddd',
     paddingVertical: 12
@@ -96,15 +150,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginHorizontal: 10
   },
-  inputTime: {
-    width: 30,
-    height: 30,
-    fontSize: 18,
-    borderWidth: 1,
+  input: {
+    width: 200,
+    borderWidth: 2,
     borderColor: '#0000ff',
-    textAlign: 'center',
-    padding: 4,
-    margin: 4
+    borderRadius: 5,
+    padding: 6
+  },
+  storeButton: {
+    fontSize: 28,
+    alignSelf: 'flex-end',
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    color: '#ffffff',
+    backgroundColor: '#88ff88'
   }
 })
 
